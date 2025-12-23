@@ -7,9 +7,14 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const { category } = req.query;
-    const filter = category ? { category, isActive: true } : { isActive: true };
+    let filter = {};
+    
+    if (category) {
+      filter.category = category;
+    }
     
     const jobs = await Job.find(filter).sort({ createdAt: -1 });
+    console.log(`Found ${jobs.length} jobs for category: ${category || 'all'}`);
     res.json({ data: jobs });
   } catch (error) {
     console.error('Error fetching jobs:', error);

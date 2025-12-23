@@ -2,11 +2,19 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { jobsAPI } from '../services/api';
 import JobCard from '../components/JobCard';
-import Advertisement from '../components/Advertisement';
 import UpdatesLogin from '../components/UpdatesLogin';
 import { FaGraduationCap, FaFileAlt, FaBriefcase, FaArrowRight, FaWhatsapp } from 'react-icons/fa';
 
-const tilePalette = ['#1f2937', '#11182d', '#1a1f3c', '#1f1234', '#1b2a4a', '#162032', '#1d1b3a', '#1b2a2f'];
+const tilePalette = [
+  'linear-gradient(135deg, #1F6E8C 0%, #0F2A44 100%)',
+  'linear-gradient(135deg, #1B3A4B 0%, #1F6E8C 100%)', 
+  'linear-gradient(135deg, #3A7CA5 0%, #1B3A4B 100%)',
+  'linear-gradient(135deg, #0F2A44 0%, #3A7CA5 100%)',
+  'linear-gradient(135deg, #1F6E8C 0%, #FF9A5A 100%)',
+  'linear-gradient(135deg, #1B3A4B 0%, #FFB07C 100%)',
+  'linear-gradient(135deg, #3A7CA5 0%, #FF9A5A 100%)',
+  'linear-gradient(135deg, #0F2A44 0%, #FFB07C 100%)'
+];
 
 const quickCTAs = [
   { icon: <FaGraduationCap size={18} />, label: 'Exam Ready Guides', link: '/category/result' },
@@ -79,20 +87,20 @@ const Home = () => {
 
       console.log('API Response:', { resultsRes, admitCardsRes, upcomingJobsRes, latestRes });
       
-      const resultsData = resultsRes.data?.data || [];
-      const admitCardsData = admitCardsRes.data?.data || [];
-      const upcomingJobsData = upcomingJobsRes.data?.data || [];
-      const latestData = latestRes.data?.data || [];
+      // Handle both response.data and response.data.data formats
+      const resultsData = resultsRes.data?.data || resultsRes.data || [];
+      const admitCardsData = admitCardsRes.data?.data || admitCardsRes.data || [];
+      const upcomingJobsData = upcomingJobsRes.data?.data || upcomingJobsRes.data || [];
+      const latestData = latestRes.data?.data || latestRes.data || [];
       
       setJobs({
-        results: resultsData.slice(0, 3),
-        admitCards: admitCardsData.slice(0, 3),
-        upcomingJobs: upcomingJobsData.slice(0, 3),
-        latest: latestData.slice(0, 6) // Always show only 6 cards
+        results: resultsData.slice(0, 10),
+        admitCards: admitCardsData.slice(0, 10),
+        upcomingJobs: upcomingJobsData.slice(0, 10),
+        latest: latestData.slice(0, 6)
       });
     } catch (error) {
       console.error('Error fetching jobs:', error);
-      // Set empty arrays on error
       setJobs({
         results: [],
         admitCards: [],
@@ -128,11 +136,6 @@ const Home = () => {
         borderBottom: '1px solid var(--color-border)'
       }}>
         <div className="container">
-          {/* Advertisement Section */}
-          <div style={{ marginBottom: '2rem' }}>
-            <Advertisement />
-          </div>
-
           {/* WhatsApp Button */}
           <a
             href="https://wa.me/1234567890"
@@ -159,17 +162,19 @@ const Home = () => {
 
           {/* SarkariResult Tools */}
           <h1 style={{
-            fontSize: '2.75rem',
+            fontSize: 'clamp(2rem, 5vw, 2.75rem)',
             fontWeight: '700',
-            color: 'var(--color-primary)',
+            color: 'var(--text-white)',
             marginBottom: '0.75rem'
           }}>
             SarkariResult Tools
           </h1>
           <p style={{
-            fontSize: '1.125rem',
-            color: 'var(--color-muted)',
-            marginBottom: '2.5rem'
+            fontSize: 'clamp(1rem, 2.5vw, 1.125rem)',
+            color: 'var(--text-secondary)',
+            marginBottom: '2.5rem',
+            maxWidth: '600px',
+            margin: '0 auto 2.5rem'
           }}>
             Quick access tiles for the most requested job updates, tailor-made for a bright daytime interface.
           </p>
@@ -191,28 +196,31 @@ const Home = () => {
                 <div
                   style={{
                     background: tilePalette[index % tilePalette.length],
-                    color: '#f8fafc',
+                    color: '#ffffff',
                     padding: '1.75rem',
                     borderRadius: '20px',
                     textAlign: 'left',
                     fontWeight: '600',
-                    fontSize: '1.05rem',
+                    fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)',
                     cursor: 'pointer',
-                    transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                    boxShadow: '0 30px 60px rgba(0, 0, 0, 0.3)',
-                    border: '1px solid rgba(148, 163, 184, 0.2)',
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    backdropFilter: 'blur(10px)',
+                    textShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
+                    minHeight: 'clamp(160px, 22vw, 220px)'
                   }}
                   onMouseEnter={(event) => {
-                    event.currentTarget.style.transform = 'translateY(-6px)';
-                    event.currentTarget.style.boxShadow = '0 25px 45px rgba(15, 23, 42, 0.12)';
+                    event.currentTarget.style.transform = 'translateY(-8px) scale(1.05)';
+                    event.currentTarget.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 176, 124, 0.4)';
                   }}
                   onMouseLeave={(event) => {
-                    event.currentTarget.style.transform = 'translateY(0)';
-                    event.currentTarget.style.boxShadow = '0 15px 35px rgba(15, 23, 42, 0.08)';
+                    event.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    event.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
                   }}
                 >
                   <div>
@@ -274,13 +282,13 @@ const Home = () => {
                         <span className="status-card__subtitle">{column.subtitle}</span>
                       </div>
                     </div>
-                    <span className="status-card__count">{columnJobs.length}</span>
+                    <span className="status-card__count" title={`${columnJobs.length} total`}>{columnJobs.length > 10 ? '10+' : columnJobs.length}</span>
                   </div>
 
                   <div className={`status-card__body${hasJobs ? '' : ' status-card__body--empty'}`}>
                     {hasJobs ? (
                       <ul className="status-card__list">
-                        {columnJobs.slice(0, 3).map((job) => (
+                        {columnJobs.slice(0, 10).map((job) => (
                           <li key={job._id}>
                             <Link to={`/job/${job._id}`}>
                               {truncateText(job.title)}

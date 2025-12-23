@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { jobsAPI } from '../services/api';
 import JobCard from '../components/JobCard';
-import UpdatesLogin from '../components/UpdatesLogin';
+import YouTubeSection from '../components/YouTubeSection';
 import { FaGraduationCap, FaFileAlt, FaBriefcase, FaArrowRight, FaWhatsapp, FaSearch, FaTimes, FaSpinner, FaExternalLinkAlt, FaEye, FaMicrophone, FaMicrophoneSlash, FaTelegram, FaCircle } from 'react-icons/fa';
 
 const tilePalette = [
@@ -16,11 +16,7 @@ const tilePalette = [
   'linear-gradient(135deg, #0F2A44 0%, #FFB07C 100%)'
 ];
 
-const quickCTAs = [
-  { icon: <FaGraduationCap size={18} />, label: 'Exam Ready Guides', link: '/category/result' },
-  { icon: <FaFileAlt size={18} />, label: 'Instant Admit Cards', link: '/category/admit-card' },
-  { icon: <FaBriefcase size={18} />, label: 'Fresh Job Drives', link: '/category/upcoming-job' }
-];
+const quickCTAs = [];
 
 const highlightColumnsConfig = [
   {
@@ -370,7 +366,7 @@ const Home = () => {
     <div>
       {/* Top Section */}
       <section style={{
-        padding: '3rem 0',
+        padding: 'clamp(2rem, 6vw, 3rem) 0',
         textAlign: 'center',
         background: '#ffffff',
         borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
@@ -381,26 +377,25 @@ const Home = () => {
           {/* Live Updates Section */}
           <div style={{
             background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
-            borderRadius: '20px',
-            padding: '12px 0',
-            marginBottom: '2rem',
+            borderRadius: 'clamp(12px, 4vw, 20px)',
+            padding: 'clamp(8px, 2vw, 12px) 0',
+            marginBottom: 'clamp(1.5rem, 4vw, 2rem)',
             overflow: 'hidden',
             position: 'relative',
             boxShadow: '0 20px 40px rgba(15, 23, 42, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
             border: '1px solid rgba(255, 255, 255, 0.1)',
             backdropFilter: 'blur(20px)',
-            height: '80px'
+            minHeight: 'fit-content',
+            height: 'auto'
           }}>
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               gap: '12px',
               paddingLeft: '24px',
               marginBottom: '8px',
-              position: 'absolute',
-              top: '8px',
-              left: '0',
+              position: 'relative',
               zIndex: 2
             }}>
               <div style={{
@@ -408,7 +403,7 @@ const Home = () => {
                 alignItems: 'center',
                 gap: '6px'
               }}>
-                <FaCircle size={8} style={{ color: '#10b981', animation: 'pulse 2s infinite' }} />
+                <FaCircle size={8} style={{ color: '#ff0000', animation: 'pulse 2s infinite' }} />
                 <span style={{
                   color: '#e2e8f0',
                   fontWeight: '700',
@@ -427,110 +422,101 @@ const Home = () => {
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.5; }
               }
-              @keyframes scrollLeft {
+              @keyframes slideMove {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50px); }
+              }
+              @keyframes marqueeHighlight {
                 0% { transform: translateX(100%); }
                 100% { transform: translateX(-100%); }
               }
-              @keyframes scrollRight {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(100%); }
-              }
-              @keyframes newContentBlink {
-                0%, 100% { 
-                  background: linear-gradient(135deg, rgba(255, 215, 0, 0.4) 0%, rgba(255, 193, 7, 0.4) 100%);
-                  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-                }
-                50% { 
-                  background: linear-gradient(135deg, rgba(255, 215, 0, 0.8) 0%, rgba(255, 193, 7, 0.8) 100%);
-                  box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
-                }
+              @keyframes colorPulse {
+                0%, 100% { color: #FFD700; }
+                50% { color: #FF8C00; }
               }
             `}</style>
             
-            {/* Single Scrolling Row */}
-            <div style={{
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              position: 'absolute',
-              top: '50%',
-              left: '0',
-              right: '0',
-              transform: 'translateY(-50%)'
-            }}>
-              <div style={{
-                display: 'inline-flex',
-                gap: '30px',
-                animation: 'scrollLeft 80s linear infinite',
-                paddingLeft: '100%'
-              }}>
-                {[...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.latest].slice(0, 6).map((job, index) => {
-                  // Check if this is a new job (added in last 24 hours)
-                  const isNewJob = job.createdAt && new Date(job.createdAt) > new Date(Date.now() - 24 * 60 * 60 * 1000);
-                  
-                  return (
-                    <Link
-                      key={`live-${job._id}`}
-                      to={`/job/${job._id}`}
-                      style={{
-                        color: '#ffffff',
-                        textDecoration: 'none',
-                        fontSize: '0.85rem',
-                        fontWeight: '600',
-                        whiteSpace: 'nowrap',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        transition: 'all 0.3s ease',
-                        padding: '6px 10px',
-                        borderRadius: '12px',
-                        animation: isNewJob ? 'newContentBlink 2s ease-in-out infinite' : 'none',
-                        border: isNewJob ? '2px solid rgba(255, 215, 0, 0.6)' : 'none'
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isNewJob) {
+            {/* Content Display - Only Latest Updates (1 Week) */}
+            {(() => {
+              const weeklyUpdates = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.latest]
+                .filter(job => job.createdAt && new Date(job.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
+              
+              if (weeklyUpdates.length === 0) {
+                return (
+                  <div style={{
+                    padding: '30px 20px',
+                    textAlign: 'center',
+                    color: '#e2e8f0',
+                    fontSize: '0.9rem'
+                  }}>
+                    No new updates in the last week
+                  </div>
+                );
+              }
+              
+              return (
+                <div style={{
+                  padding: '15px 20px'
+                }}>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                    gap: '15px'
+                  }}>
+                    {weeklyUpdates.slice(0, 6).map((job, index) => (
+                      <Link
+                        key={`weekly-${job._id}`}
+                        to={`/job/${job._id}`}
+                        style={{
+                          color: '#FFD700',
+                          textDecoration: 'none',
+                          fontSize: '0.85rem',
+                          fontWeight: '800',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          transition: 'all 0.3s ease',
+                          padding: '10px 12px',
+                          borderRadius: '10px',
+                          animation: 'colorPulse 2s ease-in-out infinite',
+                          textAlign: 'left'
+                        }}
+                        onMouseEnter={(e) => {
                           e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-                        }
-                        e.target.style.transform = 'scale(1.05)';
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isNewJob) {
+                          e.target.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={(e) => {
                           e.target.style.background = 'transparent';
-                        }
-                        e.target.style.transform = 'scale(1)';
-                      }}
-                    >
-                      <span style={{
-                        background: isNewJob 
-                          ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.9) 0%, rgba(255, 193, 7, 0.9) 100%)'
-                          : 'linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(6, 182, 212, 0.3) 100%)',
-                        padding: '2px 6px',
-                        borderRadius: '8px',
-                        fontSize: '0.7rem',
-                        fontWeight: '700',
-                        border: isNewJob 
-                          ? '1px solid rgba(255, 215, 0, 0.8)'
-                          : '1px solid rgba(16, 185, 129, 0.4)',
-                        backdropFilter: 'blur(10px)',
-                        textShadow: 'none',
-                        color: isNewJob ? '#000' : '#fff'
-                      }}>
-                        {isNewJob ? 'NEW!' : 
-                         jobs.results.includes(job) ? 'RESULT' : 
-                         jobs.admitCards.includes(job) ? 'ADMIT' :
-                         jobs.upcomingJobs.includes(job) ? 'JOB' : 'LATEST'}
-                      </span>
-                      {job.title.length > 45 ? `${job.title.substring(0, 45)}...` : job.title}
-                    </Link>
-                  );
-                })}}
-              </div>
-            </div>
+                          e.target.style.transform = 'scale(1)';
+                        }}
+                      >
+                        <span style={{
+                          background: 'rgba(255, 0, 0, 0.9)',
+                          padding: '3px 8px',
+                          borderRadius: '8px',
+                          fontSize: '0.7rem',
+                          fontWeight: '800',
+                          color: '#fff',
+                          flexShrink: 0
+                        }}>
+                          🔥 NEW!
+                        </span>
+                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {job.title.length > 40 ? `${job.title.substring(0, 40)}...` : job.title}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
           <div style={{
             display: 'flex',
-            gap: '1rem',
+            gap: 'clamp(0.75rem, 3vw, 1rem)',
             justifyContent: 'center',
-            marginBottom: '2rem'
+            marginBottom: 'clamp(1.5rem, 4vw, 2rem)',
+            flexWrap: 'wrap'
           }}>
             <a
               href="https://wa.me/1234567890"
@@ -539,14 +525,14 @@ const Home = () => {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.5rem',
+                gap: 'clamp(0.4rem, 1.5vw, 0.5rem)',
                 background: '#25D366',
                 color: 'white',
-                padding: '12px 28px',
+                padding: 'clamp(10px, 3vw, 12px) clamp(20px, 5vw, 28px)',
                 borderRadius: '999px',
                 textDecoration: 'none',
                 fontWeight: '600',
-                fontSize: '1.1rem',
+                fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                 boxShadow: '0 15px 35px rgba(37, 211, 102, 0.35)'
               }}
             >
@@ -561,14 +547,14 @@ const Home = () => {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.5rem',
+                gap: 'clamp(0.4rem, 1.5vw, 0.5rem)',
                 background: '#0088cc',
                 color: 'white',
-                padding: '12px 28px',
+                padding: 'clamp(10px, 3vw, 12px) clamp(20px, 5vw, 28px)',
                 borderRadius: '999px',
                 textDecoration: 'none',
                 fontWeight: '600',
-                fontSize: '1.1rem',
+                fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
                 boxShadow: '0 15px 35px rgba(0, 136, 204, 0.35)'
               }}
             >
@@ -598,19 +584,19 @@ const Home = () => {
 
           {/* Modern Animated Search Bar */}
           <div style={{
-            maxWidth: '1000px',
-            margin: '0 auto 3rem',
+            maxWidth: 'clamp(300px, 90vw, 1000px)',
+            margin: '0 auto clamp(2rem, 6vw, 3rem)',
             position: 'relative'
           }}>
             <div style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%)',
-              borderRadius: '30px',
-              padding: '6px',
+              borderRadius: 'clamp(20px, 6vw, 30px)',
+              padding: 'clamp(4px, 1.5vw, 6px)',
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
               backdropFilter: 'blur(40px)',
               border: '2px solid transparent',
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85)) padding-box, linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(16, 185, 129, 0.3)) border-box',
-              height: '70px',
+              height: 'clamp(50px, 12vw, 70px)',
               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
               animation: 'searchBarFloat 6s ease-in-out infinite'
             }}>
@@ -646,7 +632,7 @@ const Home = () => {
                 <div style={{
                   flex: 1,
                   position: 'relative',
-                  height: '58px'
+                  height: 'clamp(40px, 10vw, 58px)'
                 }}>
                   <input
                     type="text"
@@ -657,11 +643,11 @@ const Home = () => {
                     style={{
                       width: '100%',
                       height: '100%',
-                      padding: '18px 24px',
-                      paddingRight: speechSupported ? (searchQuery ? '160px' : '120px') : (searchQuery ? '110px' : '80px'),
+                      padding: 'clamp(12px, 4vw, 18px) clamp(16px, 5vw, 24px)',
+                      paddingRight: speechSupported ? (searchQuery ? 'clamp(120px, 25vw, 160px)' : 'clamp(90px, 20vw, 120px)') : (searchQuery ? 'clamp(80px, 18vw, 110px)' : 'clamp(60px, 15vw, 80px)'),
                       border: 'none',
-                      borderRadius: '24px',
-                      fontSize: '1.1rem',
+                      borderRadius: 'clamp(16px, 4vw, 24px)',
+                      fontSize: 'clamp(0.9rem, 3vw, 1.1rem)',
                       fontWeight: '500',
                       background: 'rgba(255, 255, 255, 0.8)',
                       outline: 'none',
@@ -988,19 +974,7 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Quick CTA Row */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '1rem'
-          }}>
-            {quickCTAs.map((cta) => (
-              <Link key={cta.label} to={cta.link} className="cta-button">
-                {cta.icon}
-                <span>{cta.label}</span>
-              </Link>
-            ))}
-          </div>
+
         </div>
       </section>
 
@@ -1065,8 +1039,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Updates Login Section */}
-      <UpdatesLogin />
+      {/* YouTube Section */}
+      <YouTubeSection />
 
       {/* Iframe Modal */}
       {showIframe && (

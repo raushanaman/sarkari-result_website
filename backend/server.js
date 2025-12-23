@@ -13,6 +13,7 @@ app.use('/uploads', express.static('uploads'));
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/jobs', require('./routes/jobs'));
+app.use('/api/contact', require('./routes/contact'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sarkari-result')
@@ -20,6 +21,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/sarkari-r
   .catch(err => console.log('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0';
+app.listen(PORT, HOST, () => {
+  console.log(`Server running on http://${HOST}:${PORT}`);
 });

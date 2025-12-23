@@ -32,14 +32,15 @@ const Header = () => {
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    gap: '0.5rem',
-    padding: '0.45rem 0.75rem',
+    gap: 'clamp(0.3rem, 1vw, 0.5rem)',
+    padding: 'clamp(0.3rem, 1.5vw, 0.45rem) clamp(0.5rem, 2vw, 0.75rem)',
     borderRadius: '8px',
     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     fontWeight: 500,
-    fontSize: '0.95rem',
+    fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)',
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    whiteSpace: 'nowrap'
   };
 
   const handleHover = (event, isEntering) => {
@@ -122,7 +123,7 @@ const Header = () => {
       <header className="header-animated" style={{
         background: '#ffffff',
         color: '#1a1a1a',
-        padding: '0.5rem 0',
+        padding: 'clamp(0.5rem, 2vw, 1rem) 0',
         position: 'sticky',
         top: 0,
         zIndex: 999,
@@ -132,17 +133,19 @@ const Header = () => {
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 'clamp(0.5rem, 2vw, 1rem)'
           }}>
             <Link to="/" className="logo-glow" style={{
-              fontSize: '1.6rem',
+              fontSize: 'clamp(1.2rem, 4vw, 1.6rem)',
               fontWeight: 'bold',
               color: '#1a1a1a',
               textDecoration: 'none',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.6rem',
-              padding: '0.25rem 0.5rem',
+              gap: 'clamp(0.4rem, 1.5vw, 0.6rem)',
+              padding: 'clamp(0.2rem, 1vw, 0.25rem) clamp(0.4rem, 1.5vw, 0.5rem)',
               borderRadius: '12px',
               background: 'rgba(0, 0, 0, 0.05)',
               transition: 'all 0.3s ease'
@@ -151,7 +154,7 @@ const Header = () => {
                 src={logo}
                 alt="Sarkari Result"
                 style={{
-                  height: '36px',
+                  height: 'clamp(28px, 6vw, 36px)',
                   width: 'auto',
                   borderRadius: '8px'
                 }}
@@ -160,8 +163,9 @@ const Header = () => {
             
             <nav style={{
               display: 'flex',
-              gap: '0.25rem',
-              alignItems: 'center'
+              gap: 'clamp(0.1rem, 1vw, 0.25rem)',
+              alignItems: 'center',
+              flexWrap: 'wrap'
             }}>
               <Link
                 to="/"

@@ -71,7 +71,7 @@ const JobCard = ({ job }) => {
         marginBottom: '0.75rem',
         paddingRight: '100px',
         lineHeight: '1.4',
-        color: 'var(--color-card-text)'
+        color: 'inherit'
       }}>
         {job.title}
       </h3>
@@ -81,7 +81,8 @@ const JobCard = ({ job }) => {
         alignItems: 'center',
         gap: '0.5rem',
         marginBottom: '0.75rem',
-        color: 'var(--color-card-muted)'
+        color: 'inherit',
+        opacity: 0.7
       }}>
         <FaBuilding />
         <span>{job.organization}</span>
@@ -92,7 +93,8 @@ const JobCard = ({ job }) => {
         alignItems: 'center',
         gap: '0.5rem',
         marginBottom: '1rem',
-        color: 'var(--color-card-muted)'
+        color: 'inherit',
+        opacity: 0.7
       }}>
         <FaCalendarAlt />
         <span>
@@ -101,7 +103,8 @@ const JobCard = ({ job }) => {
       </div>
 
       <p style={{
-        color: 'var(--color-card-muted)',
+        color: 'inherit',
+        opacity: 0.7,
         marginBottom: '1.5rem',
         lineHeight: '1.5',
         display: '-webkit-box',

@@ -275,127 +275,68 @@ const JobDetails = () => {
         )}
 
         {/* Social Links */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '1rem',
-          marginBottom: '2rem'
-        }}>
-          <div style={{
-            background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
-            color: 'white',
-            padding: '1rem',
-            borderRadius: '8px',
-            textAlign: 'center',
-            animation: 'slideInLeft 1s ease-out 1.6s both'
-          }}>
-            <FaWhatsapp size={20} style={{ marginRight: '0.5rem' }} />
-            Join Our WhatsApp Channel
-            <div style={{ textAlign: 'right', fontWeight: 'bold', marginTop: '0.5rem' }}>Follow Now</div>
-          </div>
-          <div style={{
-            background: 'linear-gradient(135deg, #E4405F 0%, #C13584 100%)',
-            color: 'white',
-            padding: '1rem',
-            borderRadius: '8px',
-            textAlign: 'center',
-            animation: 'slideInRight 1s ease-out 1.8s both'
-          }}>
-            <FaInstagram size={20} style={{ marginRight: '0.5rem' }} />
-            Follow Our Instagram Channel
-            <div style={{ textAlign: 'right', fontWeight: 'bold', marginTop: '0.5rem' }}>Follow Now</div>
-          </div>
+        <div className="social-links" aria-label="Social channels" style={{ marginBottom: '2rem' }}>
+          <a
+            href={job.whatsappLink || 'https://chat.whatsapp.com/sample-invite'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-link social-link--whatsapp"
+          >
+            <div className="social-link__icon"><FaWhatsapp size={20} /></div>
+            <div className="social-link__content">
+              <div className="social-link__title">Join Our WhatsApp Channel</div>
+              <div className="social-link__cta">Follow Now</div>
+            </div>
+          </a>
+
+          <a
+            href={job.instagramLink || 'https://instagram.com/sample'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-link social-link--instagram"
+          >
+            <div className="social-link__icon"><FaInstagram size={20} /></div>
+            <div className="social-link__content">
+              <div className="social-link__title">Follow Our Instagram Channel</div>
+              <div className="social-link__cta">Follow Now</div>
+            </div>
+          </a>
         </div>
 
-        {/* Important Links */}
-        <div style={{
-          background: 'white',
-          border: '3px solid #f59e0b',
-          borderRadius: '12px',
-          overflow: 'hidden',
-          animation: 'slideInUp 1s ease-out 2s both',
-          boxShadow: '0 15px 35px rgba(245, 158, 11, 0.2)'
-        }}>
-          <div style={{
-            background: '#f59e0b',
-            color: 'white',
-            padding: '1rem',
-            textAlign: 'center',
-            fontSize: '1.2rem',
-            fontWeight: 'bold'
-          }}>
-            SOME USEFUL IMPORTANT LINKS
-          </div>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))'
-          }}>
+        {/* Important Links (redesigned) */}
+        <section className="important-links">
+          <header className="important-links__header">
+            <h3 className="important-links__title">Some useful important links</h3>
+            <p className="important-links__meta">Quick actions and official resources for this vacancy</p>
+          </header>
+
+          <div className="important-links__grid">
             <a
+              className="important-links__primary"
               href={job.applyLink}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                background: '#fbbf24',
-                color: '#1f2937',
-                padding: '1.5rem',
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                fontSize: '1.1rem',
-                textAlign: 'center',
-                borderRight: '1px solid #f59e0b',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = '#f59e0b';
-                e.target.style.color = 'white';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = '#fbbf24';
-                e.target.style.color = '#1f2937';
-              }}
+              aria-label={`${getActionButtonText(job.category)} - ${job.organization}`}
             >
-              {getActionButtonText(job.category)}
-              <div style={{ fontSize: '1rem', marginTop: '0.5rem' }}>Click Here</div>
+              <div className="important-links__primary-content">
+                <div className="important-links__badge">{getActionButtonText(job.category)}</div>
+                <div className="important-links__primary-cta">Apply Now</div>
+                <div className="important-links__org">{job.organization}</div>
+              </div>
+              <div className="important-links__arrow">↗</div>
             </a>
-            <div style={{
-              background: '#fbbf24',
-              padding: '1.5rem',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: '1.1rem'
-            }}>
-              Check Short Notice
-              <div style={{ color: '#3b82f6', fontSize: '1rem', marginTop: '0.5rem' }}>JE Civil | Electrical | Mechanical</div>
+
+            <div className="important-links__secondary">
+              <a className="important-links__link" href={job.organizationLink || job.applyLink} target="_blank" rel="noopener noreferrer">Official Website</a>
+              <a className="important-links__link" href={job.shortNoticeLink || '#'} target="_blank" rel="noopener noreferrer">Check Short Notice</a>
+              <a className="important-links__link" href={job.syllabusLink || '#'} target="_blank" rel="noopener noreferrer">Download Syllabus / Notification</a>
             </div>
           </div>
-          <a
-            href={job.applyLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              background: '#fbbf24',
-              color: '#1f2937',
-              padding: '1.5rem',
-              textDecoration: 'none',
-              fontWeight: 'bold',
-              fontSize: '1.1rem',
-              textAlign: 'center',
-              display: 'block',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = '#f59e0b';
-              e.target.style.color = 'white';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = '#fbbf24';
-              e.target.style.color = '#1f2937';
-            }}
-          >
-            {job.organization} Official Website
-            <div style={{ fontSize: '1rem', marginTop: '0.5rem', color: '#3b82f6' }}>Click Here</div>
-          </a>
-        </div>
+
+          <div className="important-links__footer">
+            <small>Always verify details on the official website before applying. (Last date: {formatDate(job.lastDate)})</small>
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { FaHome, FaBriefcase, FaFileAlt, FaGraduationCap, FaMoon, FaSun } from 'react-icons/fa';
-import logo from '../Images/logo.jpeg';
+import logo from '../Images/Logo.jpeg';
 import { useState, useEffect } from 'react';
 
 const Header = () => {

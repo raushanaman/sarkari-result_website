@@ -33,7 +33,8 @@
 
 2. **Deploy to Vercel**:
    - Connect GitHub repository to Vercel
-   - Vercel will auto-detect the configuration from `vercel.json`
+   - Set Root Directory to `frontend`
+   - Vercel will auto-detect Vite configuration
    - Add environment variable in Vercel dashboard:
      ```
      VITE_API_BASE_URL=https://your-backend-app.onrender.com/api

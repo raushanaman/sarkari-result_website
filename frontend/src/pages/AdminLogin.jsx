@@ -192,19 +192,6 @@ const AdminLogin = () => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-
-        <div style={{
-          marginTop: '2rem',
-          padding: '1rem',
-          background: 'var(--color-surface-muted)',
-          borderRadius: '10px',
-          fontSize: '0.875rem',
-          color: 'var(--color-muted)'
-        }}>
-          <strong>Demo Credentials:</strong><br />
-          Username: admin<br />
-          Password: admin123
-        </div>
       </div>
     </div>
   );

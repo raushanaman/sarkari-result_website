@@ -802,7 +802,6 @@ const Home = () => {
             position: 'relative'
           }}>
             <div style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%)',
               borderRadius: 'clamp(20px, 6vw, 30px)',
               padding: 'clamp(4px, 1.5vw, 6px)',
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)',

@@ -6,6 +6,28 @@
   margin-top: 4rem;
 }
 
+/* Light theme footer visibility fix */
+body:not(.dark-theme) .site-footer {
+  background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #4b5563 100%);
+  color: #ffffff;
+}
+
+body:not(.dark-theme) .footer-title,
+body:not(.dark-theme) .footer-link,
+body:not(.dark-theme) .brand-description,
+body:not(.dark-theme) .contact-item,
+body:not(.dark-theme) .footer-bottom p {
+  color: #ffffff !important;
+}
+
+body:not(.dark-theme) .footer-link:hover {
+  color: #93c5fd !important;
+}
+
+body:not(.dark-theme) .contact-icon {
+  color: #93c5fd !important;
+}
+
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;

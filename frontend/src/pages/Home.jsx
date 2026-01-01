@@ -498,11 +498,18 @@ const Home = () => {
             
             {/* Content Display - 8 Updates in 2 Rows */}
             {(() => {
-              // Get all jobs from last 30 days instead of 7 days for more content
-              const recentUpdates = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.scholarships, ...jobs.admissions, ...jobs.latest]
+              // Get all jobs from last 30 days and remove duplicates
+              const allJobs = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.scholarships, ...jobs.admissions, ...jobs.latest];
+              
+              // Remove duplicates by ID
+              const uniqueJobs = allJobs.filter((job, index, self) => 
+                index === self.findIndex(j => j._id === job._id)
+              );
+              
+              const recentUpdates = uniqueJobs
                 .filter(job => job.createdAt && new Date(job.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000))
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by newest first
-                .slice(0, 16); // Take top 16 most recent
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .slice(0, 16);
               
               if (recentUpdates.length === 0) {
                 return (

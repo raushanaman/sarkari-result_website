@@ -8,7 +8,9 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : [],
+  origin: process.env.FRONTEND_URL ? 
+    process.env.FRONTEND_URL.split(',').map(url => url.trim()) : 
+    ['https://admin.kcwjob.com', 'https://kcwjob.com'], // fallback
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],

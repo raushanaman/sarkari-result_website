@@ -27,6 +27,14 @@ const Footer = () => {
             </nav>
           </div>
           
+          <div className="footer-section footer-legal">
+            <h4 className="footer-title">Legal</h4>
+            <nav className="footer-nav">
+              <a href="/privacy-policy" className="footer-link">Privacy Policy</a>
+              <a href="/disclaimer" className="footer-link">Disclaimer</a>
+            </nav>
+          </div>
+          
           <div className="footer-section footer-contact">
             <h4 className="footer-title">Contact Info</h4>
             <div className="contact-list">
@@ -47,7 +55,10 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 Kasim Cyber World. All rights reserved.</p>
+          <p>&copy; 2026 Kasim Cyber World. All rights reserved.</p>
+          <p className="disclaimer-text" style={{fontSize: '12px', marginTop: '8px', color: '#888'}}>
+            kcwjobs.com
+          </p>
         </div>
       </div>
     </footer>

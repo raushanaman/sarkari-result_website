@@ -45,26 +45,30 @@ const AdminLogin = () => {
       alignItems: 'center',
       justifyContent: 'center',
       background: 'linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-strong) 60%, var(--color-bg-warm) 100%)',
-      padding: '2rem 0'
+      padding: '1rem'
     }}>
       <div style={{
         background: 'var(--color-surface)',
         borderRadius: '16px',
-        padding: '3rem',
+        padding: 'clamp(1.5rem, 4vw, 3rem)',
         boxShadow: 'var(--shadow-soft)',
         width: '100%',
-        maxWidth: '400px'
+        maxWidth: '400px',
+        margin: '0 auto'
       }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(1rem, 3vw, 2rem)' }}>
           <h1 style={{
-            fontSize: '2rem',
+            fontSize: 'clamp(1.5rem, 4vw, 2rem)',
             fontWeight: 'bold',
             color: 'var(--color-text)',
             marginBottom: '0.5rem'
           }}>
             Admin Login
           </h1>
-          <p style={{ color: 'var(--color-muted)' }}>
+          <p style={{ 
+            color: 'var(--color-muted)',
+            fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
+          }}>
             Access the admin dashboard
           </p>
         </div>
@@ -73,33 +77,35 @@ const AdminLogin = () => {
           <div style={{
             background: '#fee2e2',
             color: '#dc2626',
-            padding: '0.75rem',
+            padding: 'clamp(0.5rem, 2vw, 0.75rem)',
             borderRadius: '6px',
-            marginBottom: '1.5rem',
+            marginBottom: 'clamp(1rem, 3vw, 1.5rem)',
             textAlign: 'center',
-            fontSize: '0.875rem'
+            fontSize: 'clamp(0.75rem, 2vw, 0.875rem)'
           }}>
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ marginBottom: 'clamp(1rem, 3vw, 1.5rem)' }}>
             <label style={{
               display: 'block',
               marginBottom: '0.5rem',
               fontWeight: '500',
-              color: 'var(--color-text)'
+              color: 'var(--color-text)',
+              fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
             }}>
               Username
             </label>
             <div style={{ position: 'relative' }}>
               <FaUser style={{
                 position: 'absolute',
-                left: '12px',
+                left: 'clamp(8px, 2vw, 12px)',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                color: '#9ca3af'
+                color: '#9ca3af',
+                fontSize: 'clamp(0.875rem, 2vw, 1rem)'
               }} />
               <input
                 type="text"
@@ -110,12 +116,13 @@ const AdminLogin = () => {
                 required
                 style={{
                   width: '100%',
-                  padding: '12px 12px 12px 40px',
+                  padding: 'clamp(10px, 2.5vw, 12px) clamp(10px, 2.5vw, 12px) clamp(10px, 2.5vw, 12px) clamp(32px, 8vw, 40px)',
                   border: '1px solid var(--color-border)',
                   borderRadius: '10px',
-                  fontSize: '1rem',
+                  fontSize: 'clamp(0.875rem, 2.5vw, 1rem)',
                   outline: 'none',
-                  transition: 'border-color 0.3s ease'
+                  transition: 'border-color 0.3s ease',
+                  boxSizing: 'border-box'
                 }}
                 onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
                 onBlur={(e) => e.target.style.borderColor = 'var(--color-border)'}
@@ -123,22 +130,24 @@ const AdminLogin = () => {
             </div>
           </div>
 
-          <div style={{ marginBottom: '2rem' }}>
+          <div style={{ marginBottom: 'clamp(1.5rem, 4vw, 2rem)' }}>
             <label style={{
               display: 'block',
               marginBottom: '0.5rem',
               fontWeight: '500',
-              color: 'var(--color-text)'
+              color: 'var(--color-text)',
+              fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
             }}>
               Password
             </label>
             <div style={{ position: 'relative' }}>
               <FaLock style={{
                 position: 'absolute',
-                left: '12px',
+                left: 'clamp(8px, 2vw, 12px)',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                color: '#9ca3af'
+                color: '#9ca3af',
+                fontSize: 'clamp(0.875rem, 2vw, 1rem)'
               }} />
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -149,12 +158,13 @@ const AdminLogin = () => {
                 required
                 style={{
                   width: '100%',
-                  padding: '12px 40px 12px 40px',
+                  padding: 'clamp(10px, 2.5vw, 12px) clamp(32px, 8vw, 40px) clamp(10px, 2.5vw, 12px) clamp(32px, 8vw, 40px)',
                   border: '1px solid var(--color-border)',
                   borderRadius: '10px',
-                  fontSize: '1rem',
+                  fontSize: 'clamp(0.875rem, 2.5vw, 1rem)',
                   outline: 'none',
-                  transition: 'border-color 0.3s ease'
+                  transition: 'border-color 0.3s ease',
+                  boxSizing: 'border-box'
                 }}
                 onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
                 onBlur={(e) => e.target.style.borderColor = 'var(--color-border)'}
@@ -164,13 +174,15 @@ const AdminLogin = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 style={{
                   position: 'absolute',
-                  right: '12px',
+                  right: 'clamp(8px, 2vw, 12px)',
                   top: '50%',
                   transform: 'translateY(-50%)',
                   background: 'none',
                   border: 'none',
                   color: '#9ca3af',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+                  padding: '4px'
                 }}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -184,9 +196,10 @@ const AdminLogin = () => {
             className="btn btn-primary"
             style={{
               width: '100%',
-              padding: '12px',
-              fontSize: '1rem',
-              fontWeight: '600'
+              padding: 'clamp(10px, 2.5vw, 12px)',
+              fontSize: 'clamp(0.875rem, 2.5vw, 1rem)',
+              fontWeight: '600',
+              minHeight: 'clamp(44px, 10vw, 48px)'
             }}
           >
             {loading ? 'Logging in...' : 'Login'}

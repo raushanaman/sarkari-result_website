@@ -38,6 +38,9 @@ const AdminDashboard = () => {
     details: ensureSectionDefaults('upcoming-job')
   });
   const navigate = useNavigate();
+  
+  // Check if dark theme is active
+  const isDarkTheme = document.body.classList.contains('dark-theme');
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -484,15 +487,16 @@ const AdminDashboard = () => {
           style={{
             textAlign: 'center',
             cursor: 'pointer',
-            border: activeFilter === 'upcoming-job' ? '2px solid #3b82f6' : 'none',
-            background: activeFilter === 'upcoming-job' ? 'rgba(59, 130, 246, 0.1)' : undefined,
-            transition: 'all 0.3s ease'
+            border: activeFilter === 'upcoming-job' ? '2px solid #3b82f6' : '1px solid #e5e7eb',
+            background: activeFilter === 'upcoming-job' ? 'rgba(59, 130, 246, 0.1)' : '#ffffff',
+            transition: 'all 0.3s ease',
+            color: '#1f2937'
           }}
         >
           <h3 style={{ color: '#3b82f6', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'upcoming-job').length}
           </h3>
-          <p style={{ color: '#6b7280' }}>Upcoming Jobs</p>
+          <p style={{ color: '#6b7280', margin: 0 }}>Upcoming Jobs</p>
         </button>
         
         <button
@@ -501,15 +505,16 @@ const AdminDashboard = () => {
           style={{
             textAlign: 'center',
             cursor: 'pointer',
-            border: activeFilter === 'result' ? '2px solid #10b981' : 'none',
-            background: activeFilter === 'result' ? 'rgba(16, 185, 129, 0.1)' : undefined,
-            transition: 'all 0.3s ease'
+            border: activeFilter === 'result' ? '2px solid #10b981' : '1px solid #e5e7eb',
+            background: activeFilter === 'result' ? 'rgba(16, 185, 129, 0.1)' : '#ffffff',
+            transition: 'all 0.3s ease',
+            color: '#1f2937'
           }}
         >
           <h3 style={{ color: '#10b981', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'result').length}
           </h3>
-          <p style={{ color: '#6b7280' }}>Results</p>
+          <p style={{ color: '#6b7280', margin: 0 }}>Results</p>
         </button>
         
         <button
@@ -518,15 +523,16 @@ const AdminDashboard = () => {
           style={{
             textAlign: 'center',
             cursor: 'pointer',
-            border: activeFilter === 'admit-card' ? '2px solid #f59e0b' : 'none',
-            background: activeFilter === 'admit-card' ? 'rgba(245, 158, 11, 0.1)' : undefined,
-            transition: 'all 0.3s ease'
+            border: activeFilter === 'admit-card' ? '2px solid #f59e0b' : '1px solid #e5e7eb',
+            background: activeFilter === 'admit-card' ? 'rgba(245, 158, 11, 0.1)' : '#ffffff',
+            transition: 'all 0.3s ease',
+            color: '#1f2937'
           }}
         >
           <h3 style={{ color: '#f59e0b', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'admit-card').length}
           </h3>
-          <p style={{ color: '#6b7280' }}>Admit Cards</p>
+          <p style={{ color: '#6b7280', margin: 0 }}>Admit Cards</p>
         </button>
         
         <button
@@ -535,15 +541,16 @@ const AdminDashboard = () => {
           style={{
             textAlign: 'center',
             cursor: 'pointer',
-            border: activeFilter === 'scholarship' ? '2px solid #8b5cf6' : 'none',
-            background: activeFilter === 'scholarship' ? 'rgba(139, 92, 246, 0.1)' : undefined,
-            transition: 'all 0.3s ease'
+            border: activeFilter === 'scholarship' ? '2px solid #8b5cf6' : '1px solid #e5e7eb',
+            background: activeFilter === 'scholarship' ? 'rgba(139, 92, 246, 0.1)' : '#ffffff',
+            transition: 'all 0.3s ease',
+            color: '#1f2937'
           }}
         >
           <h3 style={{ color: '#8b5cf6', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'scholarship').length}
           </h3>
-          <p style={{ color: '#6b7280' }}>Scholarships</p>
+          <p style={{ color: '#6b7280', margin: 0 }}>Scholarships</p>
         </button>
         
         <button
@@ -552,15 +559,16 @@ const AdminDashboard = () => {
           style={{
             textAlign: 'center',
             cursor: 'pointer',
-            border: activeFilter === 'admission' ? '2px solid #06b6d4' : 'none',
-            background: activeFilter === 'admission' ? 'rgba(6, 182, 212, 0.1)' : undefined,
-            transition: 'all 0.3s ease'
+            border: activeFilter === 'admission' ? '2px solid #06b6d4' : '1px solid #e5e7eb',
+            background: activeFilter === 'admission' ? 'rgba(6, 182, 212, 0.1)' : '#ffffff',
+            transition: 'all 0.3s ease',
+            color: '#1f2937'
           }}
         >
           <h3 style={{ color: '#06b6d4', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'admission').length}
           </h3>
-          <p style={{ color: '#6b7280' }}>Admissions</p>
+          <p style={{ color: '#6b7280', margin: 0 }}>Admissions</p>
         </button>
         
         <button
@@ -569,15 +577,16 @@ const AdminDashboard = () => {
           style={{
             textAlign: 'center',
             cursor: 'pointer',
-            border: activeFilter === 'all' ? '2px solid #6366f1' : 'none',
-            background: activeFilter === 'all' ? 'rgba(99, 102, 241, 0.1)' : undefined,
-            transition: 'all 0.3s ease'
+            border: activeFilter === 'all' ? '2px solid #6366f1' : isDarkTheme ? '1px solid #ffffff' : '1px solid #333333',
+            background: isDarkTheme ? '#ffffff' : '#000000',
+            transition: 'all 0.3s ease',
+            color: isDarkTheme ? '#000000' : '#ffffff'
           }}
         >
-          <h3 style={{ color: '#6366f1', fontSize: '2rem', marginBottom: '0.5rem' }}>
+          <h3 style={{ color: isDarkTheme ? '#000000' : '#ffffff', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).length}
           </h3>
-          <p style={{ color: '#6b7280' }}>Total Jobs</p>
+          <p style={{ color: isDarkTheme ? '#000000' : '#ffffff', margin: 0 }}>Total Jobs</p>
         </button>
       </div>
 

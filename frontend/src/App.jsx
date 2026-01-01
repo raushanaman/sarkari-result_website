@@ -7,6 +7,8 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import CategoryPage from './pages/CategoryPage';
 import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Disclaimer from './pages/Disclaimer';
 
 function App() {
   const hostname = window.location.hostname;
@@ -20,8 +22,8 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        {/* Show header/footer only on main site (not admin mode) */}
-        {!showAdminOnly && <Header />}
+        {/* Always show header except on admin login page */}
+        <Header />
         
         <main className="flex-1">
           <Routes>
@@ -41,6 +43,8 @@ function App() {
                 <Route path="/job/:id" element={<JobDetails />} />
                 <Route path="/category/:category" element={<CategoryPage />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/disclaimer" element={<Disclaimer />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/*" element={<AdminDashboard />} />
@@ -50,8 +54,8 @@ function App() {
           </Routes>
         </main>
         
-        {/* Show footer only on main site (not admin mode) */}
-        {!showAdminOnly && <Footer />}
+        {/* Always show footer except on admin login page */}
+        <Footer />
       </div>
     </Router>
   );

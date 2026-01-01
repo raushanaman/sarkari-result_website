@@ -1,0 +1,89 @@
+/* Professional Multi-Device Alignment System */
+
+/* Container max-width control */
+.container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+/* Grid system improvements */
+.three-column-grid {
+  display: grid !important;
+  justify-content: center !important;
+  align-items: start !important;
+  gap: 2rem !important;
+}
+
+.job-cards-grid {
+  display: grid !important;
+  justify-content: center !important;
+  align-items: start !important;
+  gap: 1.5rem !important;
+}
+
+/* Status cards professional alignment */
+.status-card {
+  width: 100% !important;
+  max-width: 350px !important;
+  justify-self: center !important;
+}
+
+/* Mobile (320px - 768px) */
+@media (max-width: 768px) {
+  .three-column-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .job-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .three-column-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+  
+  .job-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+}
+
+/* Desktop (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .three-column-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2rem !important;
+  }
+  
+  .job-cards-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* Large Desktop (1441px+) */
+@media (min-width: 1441px) {
+  .three-column-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2.5rem !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+  
+  .job-cards-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 2rem !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+  
+  .status-card {
+    max-width: 320px !important;
+  }
+}

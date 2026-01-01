@@ -704,7 +704,8 @@ const Home = () => {
             gap: 'clamp(0.75rem, 3vw, 1rem)',
             justifyContent: 'center',
             marginBottom: 'clamp(1.5rem, 4vw, 2rem)',
-            flexWrap: 'wrap'
+            flexWrap: 'wrap',
+            padding: '0 clamp(0.5rem, 2vw, 1rem)'
           }}>
             <a
               href="https://chat.whatsapp.com/JKMhQcH0RhY44XvM3t48PI"
@@ -799,7 +800,8 @@ const Home = () => {
           <div style={{
             maxWidth: 'clamp(300px, 90vw, 1000px)',
             margin: '0 auto clamp(1rem, 3vw, 1.5rem)',
-            position: 'relative'
+            position: 'relative',
+            padding: '0 clamp(0.5rem, 2vw, 1rem)'
           }}>
             <div style={{
               borderRadius: 'clamp(20px, 6vw, 30px)',
@@ -1130,7 +1132,7 @@ const Home = () => {
           <div className="job-cards-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(250px, 30vw, 320px), 1fr))',
-            gap: 'clamp(0.8rem, 2vw, 1.2rem)',
+            gap: 'clamp(0.5rem, 1.5vw, 1.2rem)',
             marginBottom: '3rem',
             gridAutoRows: '1fr'
           }}>
@@ -1195,16 +1197,17 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Three Column Section - First Row */}
+      {/* Single Continuous Cards Section */}
       <section style={{ padding: '3rem 0', background: 'var(--color-surface)' }}>
         <div className="container">
-          <div className="three-column-grid" style={{
+          <div className="all-cards-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem',
-            marginBottom: '3rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '1rem',
+            justifyContent: 'center',
+            alignItems: 'stretch'
           }}>
-            {highlightColumnsConfig.slice(0, 3).map((column) => {
+            {highlightColumnsConfig.map((column) => {
               const columnJobs = jobs[column.id] || [];
               const hasJobs = columnJobs.length > 0;
               return (
@@ -1216,60 +1219,6 @@ const Home = () => {
                       </span>
                       <div>
                         <p>{column.title}</p>
-                        <span className="status-card__subtitle">{column.subtitle}</span>
-                      </div>
-                    </div>
-                    <span className="status-card__count" title={`${columnJobs.length} total`}>{columnJobs.length > 20 ? '20+' : columnJobs.length}</span>
-                  </div>
-
-                  <div className={`status-card__body${hasJobs ? '' : ' status-card__body--empty'}`}>
-                    {hasJobs ? (
-                      <ul className="status-card__list">
-                        {columnJobs.slice(0, 20).map((job) => (
-                          <li key={job._id}>
-                            <Link to={`/job/${job._id}`}>
-                              {truncateText(job.title)}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="status-card__empty">{column.empty}</p>
-                    )}
-                  </div>
-
-                  <Link
-                    to={column.viewAllLink}
-                    className="status-card__cta"
-                    style={{ background: column.ctaTint, color: column.ctaColor || 'var(--color-text)' }}
-                  >
-                    {column.viewAllLabel}
-                    <FaArrowRight size={16} />
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Second Row - Scholarships and Admissions */}
-          <div className="three-column-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem'
-          }}>
-            {highlightColumnsConfig.slice(3, 5).map((column) => {
-              const columnJobs = jobs[column.id] || [];
-              const hasJobs = columnJobs.length > 0;
-              return (
-                <div key={column.id} className="status-card">
-                  <div className="status-card__header" style={{ background: column.headerGradient }}>
-                    <div className="status-card__title">
-                      <span className="status-card__icon">
-                        {column.icon}
-                      </span>
-                      <div>
-                        <p>{column.title}</p>
-                        <span className="status-card__subtitle">{column.subtitle}</span>
                       </div>
                     </div>
                     <span className="status-card__count" title={`${columnJobs.length} total`}>{columnJobs.length > 20 ? '20+' : columnJobs.length}</span>

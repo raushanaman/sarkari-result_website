@@ -1218,3 +1218,320 @@ body.dark-theme .card-rich a {
     display: block !important;
   }
 }
+/* Professional Two-Device Responsive System */
+
+/* Mobile Devices (up to 768px) */
+@media (max-width: 768px) {
+  .three-column-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    max-width: 100% !important;
+  }
+  
+  .job-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .status-card {
+    max-width: 100% !important;
+  }
+}
+
+/* Desktop/Laptop Devices (769px and above) */
+@media (min-width: 769px) {
+  .three-column-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2rem !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+  
+  .job-cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+    gap: 1.5rem !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+  
+  .status-card {
+    max-width: 380px !important;
+    width: 100% !important;
+  }
+}
+/* Category Page Mobile Responsiveness */
+@media (max-width: 768px) {
+  .category-list-header {
+    display: none !important;
+  }
+  
+  .category-list-item {
+    display: block !important;
+    padding: 1rem !important;
+  }
+  
+  .category-list-mobile-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  
+  .category-list-mobile-meta {
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-list-item {
+    padding: 0.75rem !important;
+  }
+  
+  .category-list-mobile-meta {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+  
+  .category-list-mobile-content h3 {
+    font-size: 1rem !important;
+  }
+}
+/* Re-enable View All buttons */
+.status-card__cta {
+  height: 60px !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  transition: all 0.2s ease !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+/* Equal Height Cards System */
+.status-card {
+  height: 500px !important;
+  width: 100% !important;
+  max-width: 350px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-self: center !important;
+}
+
+.status-card__header {
+  height: 80px !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1rem !important;
+}
+
+.status-card__body {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  padding: 1rem !important;
+}
+
+.status-card__body::-webkit-scrollbar {
+  display: none !important;
+}
+
+.status-card__cta {
+  height: 60px !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Grid equal heights */
+.three-column-grid {
+  align-items: stretch !important;
+  justify-items: center !important;
+}
+
+/* Mobile responsive equal heights */
+@media (max-width: 768px) {
+  .status-card {
+    height: 450px !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-card {
+    height: 400px !important;
+  }
+}
+/* Card Row Spacing and Subtitle Removal */
+.three-column-grid:nth-of-type(2) {
+  margin-top: 4rem !important;
+}
+
+/* Remove all subtitle text from cards */
+.status-card__subtitle {
+  display: none !important;
+}
+
+/* Ensure proper spacing between sections */
+@media (max-width: 768px) {
+  .three-column-grid:nth-of-type(2) {
+    margin-top: 3rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .three-column-grid:nth-of-type(2) {
+    margin-top: 2rem !important;
+  }
+}
+/* Desktop Grid Layout - Fixed Columns */
+@media (min-width: 769px) {
+  .three-column-grid:first-of-type {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .three-column-grid:nth-of-type(2) {
+    grid-template-columns: repeat(2, 1fr) !important;
+    justify-content: center !important;
+  }
+}
+
+/* Mobile Grid Layout - Single Column */
+@media (max-width: 768px) {
+  .three-column-grid:first-of-type,
+  .three-column-grid:nth-of-type(2) {
+    grid-template-columns: 1fr !important;
+  }
+}
+/* Mobile Layout - 2 Cards Per Row */
+@media (max-width: 768px) {
+  .three-column-grid:first-of-type {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  
+  .three-column-grid:nth-of-type(2) {
+    grid-template-columns: repeat(2, 1fr) !important;
+    justify-content: center !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* Mobile Font Size Reductions */
+  body {
+    font-size: 14px !important;
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  h2 {
+    font-size: 1.25rem !important;
+  }
+  
+  h3 {
+    font-size: 1.1rem !important;
+  }
+  
+  p, span, div {
+    font-size: 0.85rem !important;
+  }
+  
+  /* Header Mobile Optimization */
+  .site-header {
+    padding: 0.5rem 0 !important;
+  }
+  
+  .site-header .container {
+    padding: 0 1rem !important;
+  }
+  
+  /* Navigation Mobile */
+  .nav-item {
+    font-size: 0.8rem !important;
+    padding: 0.4rem 0.6rem !important;
+  }
+  
+  /* Status Card Mobile Fonts */
+  .status-card__title p {
+    font-size: 0.95rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .status-card__subtitle {
+    font-size: 0.75rem !important;
+  }
+  
+  .status-card__list li a {
+    font-size: 0.8rem !important;
+  }
+  
+  .status-card__cta {
+    font-size: 0.8rem !important;
+  }
+  
+  /* Job Cards Mobile */
+  .job-card {
+    font-size: 0.8rem !important;
+    padding: 1rem !important;
+  }
+  
+  /* Search Bar Mobile */
+  .search-input {
+    font-size: 0.9rem !important;
+  }
+  
+  /* Social Buttons Mobile */
+  .social-buttons-container a {
+    font-size: 0.85rem !important;
+    padding: 8px 16px !important;
+  }
+  
+  /* Live Updates Mobile */
+  .live-updates-section {
+    font-size: 0.8rem !important;
+  }
+}
+
+/* Continuous Cards Grid Layout */
+.all-cards-grid {
+  display: grid !important;
+  gap: 1rem !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+/* Desktop Layout - 3 cards per row */
+@media (min-width: 769px) {
+  .all-cards-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* Mobile Layout - 2 cards per row */
+@media (max-width: 768px) {
+  .all-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+}
+
+/* Extra small screens - 1 card per row */
+@media (max-width: 480px) {
+  .all-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}

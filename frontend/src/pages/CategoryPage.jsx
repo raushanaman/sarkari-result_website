@@ -105,7 +105,7 @@ const CategoryPage = () => {
           </Link>
 
           <h1 style={{
-            fontSize: '3rem',
+            fontSize: 'clamp(2rem, 6vw, 3rem)',
             fontWeight: 'bold',
             marginBottom: '1rem'
           }}>
@@ -122,7 +122,7 @@ const CategoryPage = () => {
       </section>
 
       {/* Jobs Section - List Format */}
-      <section style={{ padding: '3rem 0' }}>
+      <section style={{ padding: 'clamp(2rem, 5vw, 3rem) 0' }}>
         <div className="container">
           {jobs.length === 0 ? (
             <div style={{
@@ -156,12 +156,12 @@ const CategoryPage = () => {
               border: '1px solid rgba(0, 0, 0, 0.05)'
             }}>
               {/* List Header */}
-              <div style={{
+              <div className="category-list-header" style={{
                 background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
                 padding: '1rem 1.5rem',
                 borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
                 display: 'grid',
-                gridTemplateColumns: '1fr auto auto auto',
+                gridTemplateColumns: '1fr auto auto',
                 gap: '1rem',
                 alignItems: 'center',
                 fontWeight: '600',
@@ -170,7 +170,6 @@ const CategoryPage = () => {
               }}>
                 <div>Job Title & Organization</div>
                 <div style={{ textAlign: 'center', minWidth: '120px' }}>Date</div>
-                <div style={{ textAlign: 'center', minWidth: '100px' }}>Category</div>
                 <div style={{ textAlign: 'center', minWidth: '100px' }}>Action</div>
               </div>
 
@@ -209,7 +208,7 @@ const CategoryPage = () => {
                       case 'admit-card':
                         return 'Admit Card';
                       case 'upcoming-job':
-                        return 'Job Opening';
+                        return 'Job';
                       case 'scholarship':
                         return 'Scholarship';
                       case 'admission':
@@ -239,11 +238,12 @@ const CategoryPage = () => {
                   return (
                     <div
                       key={job._id}
+                      className="category-list-item"
                       style={{
                         padding: '1.25rem 1.5rem',
                         borderBottom: index < jobs.length - 1 ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
                         display: 'grid',
-                        gridTemplateColumns: '1fr auto auto auto',
+                        gridTemplateColumns: '1fr auto auto',
                         gap: '1rem',
                         alignItems: 'center',
                         transition: 'all 0.2s ease',
@@ -257,7 +257,7 @@ const CategoryPage = () => {
                       }}
                     >
                       {/* Job Title & Organization */}
-                      <div>
+                      <div className="category-list-mobile-content">
                         <h3 style={{
                           fontSize: '1.1rem',
                           fontWeight: '600',
@@ -267,12 +267,13 @@ const CategoryPage = () => {
                         }}>
                           {job.title}
                         </h3>
-                        <div style={{
+                        <div className="category-list-mobile-meta" style={{
                           display: 'flex',
                           alignItems: 'center',
                           gap: '0.5rem',
                           color: '#64748b',
-                          fontSize: '0.9rem'
+                          fontSize: '0.9rem',
+                          flexWrap: 'wrap'
                         }}>
                           <FaBuilding size={14} />
                           <span>{job.organization}</span>
@@ -310,24 +311,6 @@ const CategoryPage = () => {
                         </div>
                       </div>
 
-                      {/* Category Badge */}
-                      <div style={{
-                        textAlign: 'center',
-                        minWidth: '100px'
-                      }}>
-                        <span style={{
-                          background: getCategoryColor(job.category),
-                          color: '#ffffff',
-                          padding: '4px 12px',
-                          borderRadius: '20px',
-                          fontSize: '0.8rem',
-                          fontWeight: '500',
-                          whiteSpace: 'nowrap'
-                        }}>
-                          {getCategoryLabel(job.category)}
-                        </span>
-                      </div>
-
                       {/* Action Button */}
                       <div style={{
                         textAlign: 'center',
@@ -359,7 +342,6 @@ const CategoryPage = () => {
                           }}
                         >
                           {getActionButton(job.category).text}
-                          <FaExternalLinkAlt size={12} />
                         </Link>
                       </div>
                     </div>

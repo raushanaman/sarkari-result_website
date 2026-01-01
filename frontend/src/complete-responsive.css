@@ -1,0 +1,202 @@
+/* Complete Website Responsive Alignment System */
+
+/* Global Container Control */
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 clamp(1rem, 3vw, 2rem) !important;
+}
+
+/* Header Responsive */
+.site-header {
+  width: 100% !important;
+}
+
+.site-header .container {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+}
+
+/* Home Section Alignment */
+.home-section {
+  width: 100% !important;
+  padding: clamp(2rem, 5vw, 4rem) 0 !important;
+}
+
+/* Live Updates Section */
+.live-updates-section {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 2rem 0 !important;
+  overflow: hidden !important;
+}
+
+/* Search Bar Responsive */
+.search-container {
+  width: 100% !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+}
+
+/* Social Buttons Alignment */
+.social-buttons-container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: clamp(0.5rem, 2vw, 1rem) !important;
+  margin: 2rem 0 !important;
+}
+
+/* Job Cards Grid Perfect Alignment */
+.job-cards-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: clamp(1rem, 2vw, 1.5rem) !important;
+  justify-content: center !important;
+  align-items: start !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+/* Three Column Grid System */
+.three-column-grid {
+  display: grid !important;
+  gap: clamp(1rem, 3vw, 2rem) !important;
+  justify-content: center !important;
+  align-items: start !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+/* Status Cards Uniform Size */
+.status-card {
+  width: 100% !important;
+  max-width: 380px !important;
+  min-height: 400px !important;
+  justify-self: center !important;
+}
+
+/* YouTube Section */
+.youtube-section {
+  width: 100% !important;
+  text-align: center !important;
+  padding: clamp(2rem, 5vw, 3rem) 0 !important;
+}
+
+/* Footer Responsive */
+footer {
+  width: 100% !important;
+}
+
+footer .container {
+  display: grid !important;
+  gap: clamp(1.5rem, 3vw, 2rem) !important;
+}
+
+/* Mobile Devices (≤768px) */
+@media (max-width: 768px) {
+  .site-header .container {
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+  
+  .site-header nav {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  
+  /* Job Cards - 2 per row on mobile */
+  .job-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* All Cards Grid - 2 per row on mobile */
+  .all-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  
+  .social-buttons-container {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    justify-content: center !important;
+  }
+  
+  .social-buttons-container > * {
+    flex: 1 1 calc(50% - 0.25rem) !important;
+    min-width: 140px !important;
+    max-width: 180px !important;
+  }
+  
+  footer .container {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+  }
+  
+  /* Mobile font reductions */
+  body {
+    font-size: 14px !important;
+  }
+  
+  .container {
+    padding: 0 1rem !important;
+  }
+}
+
+/* Tablet Devices (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .job-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .three-column-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  footer .container {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Desktop Devices (≥1025px) */
+@media (min-width: 1025px) {
+  .job-cards-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .three-column-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  footer .container {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* Large Screens (≥1441px) - Prevent Over-stretching */
+@media (min-width: 1441px) {
+  .container {
+    max-width: 1200px !important;
+  }
+  
+  .job-cards-grid {
+    max-width: 1200px !important;
+  }
+  
+  .three-column-grid {
+    max-width: 1200px !important;
+  }
+}

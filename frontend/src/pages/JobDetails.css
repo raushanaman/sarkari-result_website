@@ -530,4 +530,46 @@ body.dark-theme .job-details-container .important-links {
   .important-links__video {
     min-height: 180px;
   }
+  
+  .job-hero__title {
+    font-size: 1.5rem !important;
+  }
+  
+  .job-details-container {
+    padding: 0 0.75rem !important;
+  }
+  
+  .job-keygrid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  .job-section-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .job-details-page {
+    padding: 1rem 0 !important;
+  }
+  
+  .job-hero {
+    padding: 1.25rem !important;
+    margin: 0 0.5rem !important;
+  }
+  
+  .job-hero__title {
+    font-size: 1.25rem !important;
+  }
+  
+  .job-details-card {
+    padding: 1rem !important;
+    margin: 0 0.5rem !important;
+  }
+  
+  .important-links__item {
+    padding: 0.85rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
 }

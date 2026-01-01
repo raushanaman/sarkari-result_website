@@ -120,6 +120,38 @@ const Header = () => {
             visibility: visible;
             transform: translateY(0);
           }
+          
+          @media (max-width: 768px) {
+            .header-container {
+              flex-direction: column;
+              gap: 0.75rem;
+            }
+            
+            .header-nav {
+              justify-content: center !important;
+              width: 100%;
+              gap: 0.25rem !important;
+            }
+            
+            .nav-item {
+              font-size: 0.75rem !important;
+              padding: 0.3rem 0.5rem !important;
+            }
+            
+            .logo-glow {
+              font-size: 1.1rem !important;
+            }
+          }
+          
+          @media (min-width: 769px) {
+            .header-container {
+              flex-direction: row;
+            }
+            
+            .header-nav {
+              justify-content: flex-end !important;
+            }
+          }
         `}
       </style>
       
@@ -131,7 +163,7 @@ const Header = () => {
         zIndex: 999
       }}>
         <div className="container">
-          <div style={{
+          <div className="header-container" style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -167,11 +199,13 @@ const Header = () => {
               />
             </Link>
             
-            <nav style={{
+            <nav className="header-nav" style={{
               display: 'flex',
               gap: 'clamp(0.1rem, 1vw, 0.25rem)',
               alignItems: 'center',
-              flexWrap: 'wrap'
+              flexWrap: 'wrap',
+              justifyContent: 'flex-end',
+              flex: 1
             }}>
               <Link
                 to="/"

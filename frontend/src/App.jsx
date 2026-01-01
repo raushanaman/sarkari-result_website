@@ -12,17 +12,21 @@ function App() {
   const hostname = window.location.hostname;
   const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
   const isAdminSubdomain = hostname.startsWith('admin.') && !isLocalhost;
+  const isAdminMode = import.meta.env.VITE_ADMIN_MODE === 'true';
+  
+  // Check if we're in admin mode (either subdomain or environment variable)
+  const showAdminOnly = isAdminSubdomain || isAdminMode;
   
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        {/* Show header/footer only on main site (not admin subdomain) */}
-        {!isAdminSubdomain && <Header />}
+        {/* Show header/footer only on main site (not admin mode) */}
+        {!showAdminOnly && <Header />}
         
         <main className="flex-1">
           <Routes>
-            {isAdminSubdomain ? (
-              // Production admin subdomain - only admin routes
+            {showAdminOnly ? (
+              // Admin mode - only admin routes
               <>
                 <Route path="/" element={<AdminLogin />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
@@ -31,7 +35,7 @@ function App() {
                 <Route path="*" element={<AdminLogin />} />
               </>
             ) : (
-              // Localhost or main domain - all routes
+              // Normal mode - all routes
               <>
                 <Route path="/" element={<Home />} />
                 <Route path="/job/:id" element={<JobDetails />} />
@@ -46,8 +50,8 @@ function App() {
           </Routes>
         </main>
         
-        {/* Show footer only on main site (not admin subdomain) */}
-        {!isAdminSubdomain && <Footer />}
+        {/* Show footer only on main site (not admin mode) */}
+        {!showAdminOnly && <Footer />}
       </div>
     </Router>
   );

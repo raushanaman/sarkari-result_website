@@ -6,30 +6,16 @@ require('dotenv').config();
 
 const app = express();
 
-// CORS configuration for production
+// CORS configuration
 const corsOptions = {
-  origin: function (origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:5173',
-      'https://kcwjob.com',
-      'https://www.kcwjob.com',
-      'https://kcwjobs.vercel.app',
-      'https://sarkari-result-website.vercel.app',
-      process.env.FRONTEND_URL,
-    ].filter(Boolean);
-    
-    console.log('Request origin:', origin);
-    console.log('Allowed origins:', allowedOrigins);
-    
-    // Allow all origins for debugging
-    callback(null, true);
-  },
+  origin: process.env.FRONTEND_URL ? 
+    process.env.FRONTEND_URL.split(',').map(url => url.trim()) : 
+    ['https://admin.kcwjob.com', 'https://kcwjob.com'], // fallback
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
 };
-
+//fixed cors issue here
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -74,11 +60,14 @@ mongoose.connect(process.env.MONGODB_URI, mongoOptions)
   });
 
 // Graceful shutdown
-process.on('SIGINT', async () => {
+const gracefulShutdown = async () => {
   console.log('Shutting down gracefully...');
   await mongoose.connection.close();
   process.exit(0);
-});
+};
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
 
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || '0.0.0.0';

@@ -9,22 +9,45 @@ import CategoryPage from './pages/CategoryPage';
 import Contact from './pages/Contact';
 
 function App() {
+  const hostname = window.location.hostname;
+  const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
+  const isAdminSubdomain = hostname.startsWith('admin.') && !isLocalhost;
+  
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <Header />
+        {/* Show header/footer only on main site (not admin subdomain) */}
+        {!isAdminSubdomain && <Header />}
+        
         <main className="flex-1">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/job/:id" element={<JobDetails />} />
-            <Route path="/category/:category" element={<CategoryPage />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/*" element={<AdminDashboard />} />
+            {isAdminSubdomain ? (
+              // Production admin subdomain - only admin routes
+              <>
+                <Route path="/" element={<AdminLogin />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/*" element={<AdminDashboard />} />
+                <Route path="*" element={<AdminLogin />} />
+              </>
+            ) : (
+              // Localhost or main domain - all routes
+              <>
+                <Route path="/" element={<Home />} />
+                <Route path="/job/:id" element={<JobDetails />} />
+                <Route path="/category/:category" element={<CategoryPage />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/*" element={<AdminDashboard />} />
+                <Route path="*" element={<Home />} />
+              </>
+            )}
           </Routes>
         </main>
-        <Footer />
+        
+        {/* Show footer only on main site (not admin subdomain) */}
+        {!isAdminSubdomain && <Footer />}
       </div>
     </Router>
   );

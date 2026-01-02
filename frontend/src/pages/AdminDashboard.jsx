@@ -187,12 +187,19 @@ const AdminDashboard = () => {
     e.preventDefault();
     
     // Basic validation
-    if (!formData.title || !formData.organization || !formData.description || 
-        !formData.lastDate || !formData.applicationFee || !formData.applyLink || 
-        !formData.eligibility) {
+    if (!formData.title || !formData.organization || !formData.lastDate || !formData.applyLink) {
       setNotification('❌ Please fill all required fields.');
       setTimeout(() => setNotification(''), 5000);
       return;
+    }
+    
+    // Category-specific validation for description, eligibility, and application fee
+    if (formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') {
+      if (!formData.description || !formData.eligibility || !formData.applicationFee) {
+        setNotification('❌ Please fill description, eligibility, and application fee.');
+        setTimeout(() => setNotification(''), 5000);
+        return;
+      }
     }
     
     // Category-specific validation
@@ -801,22 +808,26 @@ const AdminDashboard = () => {
                 <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem' }}>Narrative Blocks</h3>
                 <div style={{ display: 'grid', gap: '1rem' }}>
                   <div>
-                    <label style={labelStyle}>Description *</label>
+                    <label style={labelStyle}>
+                      Description{(formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') ? ' *' : ''}
+                    </label>
                     <textarea
                       name="description"
                       value={formData.description}
                       onChange={handleChange}
-                      required
+                      required={formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission'}
                       style={{ ...textareaStyle, minHeight: '120px' }}
                     />
                   </div>
                   <div>
-                    <label style={labelStyle}>Eligibility *</label>
+                    <label style={labelStyle}>
+                      Eligibility{(formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') ? ' *' : ''}
+                    </label>
                     <textarea
                       name="eligibility"
                       value={formData.eligibility}
                       onChange={handleChange}
-                      required
+                      required={formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission'}
                       style={{ ...textareaStyle, minHeight: '100px' }}
                     />
                   </div>
@@ -831,13 +842,15 @@ const AdminDashboard = () => {
                   gap: '1rem'
                 }}>
                   <div>
-                    <label style={labelStyle}>Application Fee *</label>
+                    <label style={labelStyle}>
+                      Application Fee{(formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') ? ' *' : ''}
+                    </label>
                     <input
                       type="text"
                       name="applicationFee"
                       value={formData.applicationFee}
                       onChange={handleChange}
-                      required
+                      required={formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission'}
                       placeholder="e.g., ₹500 or Free"
                       style={inputStyle}
                     />

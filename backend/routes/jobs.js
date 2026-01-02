@@ -43,9 +43,15 @@ router.post('/', auth, async (req, res) => {
     
     // Validate required fields
     if (!jobData.title || !jobData.organization || !jobData.category || 
-        !jobData.description || !jobData.lastDate || !jobData.applicationFee || 
-        !jobData.applyLink || !jobData.eligibility) {
+        !jobData.lastDate || !jobData.applyLink) {
       return res.status(400).json({ message: 'Missing required fields' });
+    }
+    
+    // Category-specific validation for description, eligibility, and application fee
+    if (jobData.category === 'upcoming-job' || jobData.category === 'scholarship' || jobData.category === 'admission') {
+      if (!jobData.description || !jobData.eligibility || !jobData.applicationFee) {
+        return res.status(400).json({ message: 'Missing required fields: description, eligibility, and application fee are required for this category' });
+      }
     }
     
     // Clear job-specific fields for result and admit-card categories

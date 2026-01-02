@@ -16,7 +16,7 @@ const JobSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true
+    required: false
   },
   lastDate: {
     type: Date,
@@ -28,7 +28,7 @@ const JobSchema = new mongoose.Schema({
   },
   applicationFee: {
     type: String,
-    required: true
+    required: false
   },
   applyLink: {
     type: String,
@@ -52,7 +52,7 @@ const JobSchema = new mongoose.Schema({
   },
   eligibility: {
     type: String,
-    required: true
+    required: false
   },
   salary: {
     type: String,

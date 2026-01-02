@@ -21,7 +21,7 @@ const quickCTAs = [];
 const highlightColumnsConfig = [
   {
     id: 'results',
-    title: 'Latest Results',
+    title: 'Results',
     subtitle: 'Fresh merit lists + score cards',
     headerGradient: 'linear-gradient(120deg, #f43f5e 0%, #ef4444 55%, #dc2626 100%)',
     empty: 'No results available',
@@ -30,18 +30,6 @@ const highlightColumnsConfig = [
     viewAllLink: '/category/result',
     ctaTint: '#fef2f2',
     ctaColor: '#b91c1c'
-  },
-  {
-    id: 'admitCards',
-    title: 'Admit Cards',
-    subtitle: 'Instant hall ticket drops',
-    headerGradient: 'linear-gradient(120deg, #10b981 0%, #059669 55%, #047857 100%)',
-    empty: 'No admit cards available',
-    icon: <FaFileAlt size={22} />,
-    viewAllLabel: 'View All Admit Cards',
-    viewAllLink: '/category/admit-card',
-    ctaTint: '#ecfdf5',
-    ctaColor: '#047857'
   },
   {
     id: 'upcomingJobs',
@@ -54,6 +42,18 @@ const highlightColumnsConfig = [
     viewAllLink: '/category/upcoming-job',
     ctaTint: '#fff7ed',
     ctaColor: '#c2410c'
+  },
+  {
+    id: 'admitCards',
+    title: 'Admit Cards',
+    subtitle: 'Instant hall ticket drops',
+    headerGradient: 'linear-gradient(120deg, #10b981 0%, #059669 55%, #047857 100%)',
+    empty: 'No admit cards available',
+    icon: <FaFileAlt size={22} />,
+    viewAllLabel: 'View All Admit Cards',
+    viewAllLink: '/category/admit-card',
+    ctaTint: '#ecfdf5',
+    ctaColor: '#047857'
   },
   {
     id: 'scholarships',

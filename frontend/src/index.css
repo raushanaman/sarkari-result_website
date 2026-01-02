@@ -94,7 +94,16 @@ body:not(.dark-theme) .container {
 body:not(.dark-theme) h1,
 body:not(.dark-theme) h2,
 body:not(.dark-theme) h3 {
-  color: #111827 !important;
+  color: #e4e8ef !important;
+}
+
+/* Admin Dashboard specific fixes */
+body:not(.dark-theme) .container h1 {
+  color: #eceff5 !important;
+}
+
+body:not(.dark-theme) .container h2 {
+  color: #d4dae7 !important;
 }
 
 body:not(.dark-theme) p,

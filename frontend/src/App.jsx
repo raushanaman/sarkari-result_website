@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -15,6 +16,11 @@ function App() {
   const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
   const isAdminSubdomain = hostname.startsWith('admin.') && !isLocalhost;
   const isAdminMode = import.meta.env.VITE_ADMIN_MODE === 'true';
+  
+  // Set page title
+  useEffect(() => {
+    document.title = 'KCWJob - Government Jobs, Results & Admit Cards';
+  }, []);
   
   // Check if we're in admin mode (either subdomain or environment variable)
   const showAdminOnly = isAdminSubdomain || isAdminMode;

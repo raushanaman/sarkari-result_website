@@ -418,11 +418,18 @@ const AdminDashboard = () => {
         <div style={{ display: 'flex', gap: '1rem' }}>
           <button
             onClick={() => setShowForm(true)}
-            className="btn btn-primary"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem'
+              gap: '0.5rem',
+              background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+              color: 'white',
+              border: 'none',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '8px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              fontSize: '0.95rem'
             }}
           >
             <FaPlus />
@@ -431,18 +438,18 @@ const AdminDashboard = () => {
           
           <button
             onClick={() => setShowYouTubeForm(true)}
-            className="btn"
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              background: '#ff0000',
+              background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
               color: 'white',
               border: 'none',
               padding: '0.75rem 1.5rem',
               borderRadius: '8px',
               fontWeight: '600',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: '0.95rem'
             }}
           >
             <FaYoutube />
@@ -451,11 +458,18 @@ const AdminDashboard = () => {
           
           <button
             onClick={handleLogout}
-            className="btn btn-secondary"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem'
+              gap: '0.5rem',
+              background: 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
+              color: 'white',
+              border: 'none',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '8px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              fontSize: '0.95rem'
             }}
           >
             <FaSignOutAlt />

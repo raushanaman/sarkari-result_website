@@ -16,6 +16,7 @@ const AdminDashboard = () => {
   const [editingJob, setEditingJob] = useState(null);
   const [notification, setNotification] = useState('');
   const [selectedJobsForDeletion, setSelectedJobsForDeletion] = useState([]);
+  const [isDarkTheme, setIsDarkTheme] = useState(document.body.classList.contains('dark-theme'));
   const [youtubeData, setYoutubeData] = useState({
     channelUrl: ''
   });
@@ -39,8 +40,14 @@ const AdminDashboard = () => {
   });
   const navigate = useNavigate();
   
-  // Check if dark theme is active
-  const isDarkTheme = document.body.classList.contains('dark-theme');
+  // Theme detection with observer
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkTheme(document.body.classList.contains('dark-theme'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -353,8 +360,8 @@ const AdminDashboard = () => {
 
   const categorySections = CATEGORY_SECTION_CONFIG[formData.category] || [];
   const modalSectionStyle = {
-    background: 'rgba(248, 250, 252, 0.9)',
-    border: '1px solid var(--color-border)',
+    background: isDarkTheme ? 'rgba(15, 23, 42, 0.6)' : 'rgba(248, 250, 252, 0.9)',
+    border: isDarkTheme ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid #e5e7eb',
     borderRadius: '20px',
     padding: '1.25rem',
     boxShadow: '0 22px 45px rgba(15, 23, 42, 0.12)'
@@ -363,14 +370,15 @@ const AdminDashboard = () => {
     display: 'block',
     marginBottom: '0.45rem',
     fontWeight: '600',
-    color: 'var(--color-text)'
+    color: isDarkTheme ? '#fff' : '#374151'
   };
   const inputStyle = {
     width: '100%',
     padding: '10px 14px',
-    border: '1px solid var(--color-border)',
+    border: isDarkTheme ? '1px solid rgba(255, 255, 255, 0.2)' : '1px solid #d1d5db',
     borderRadius: '12px',
-    background: '#fff',
+    background: isDarkTheme ? 'rgba(15, 23, 42, 0.8)' : '#fff',
+    color: isDarkTheme ? '#fff' : '#374151',
     fontSize: '0.95rem'
   };
   const textareaStyle = {
@@ -395,7 +403,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="container" style={{ padding: '2rem 0', color: '#1f2937' }}>
+    <div className="container" style={{ padding: '2rem 0', color: isDarkTheme ? '#e2e8f0' : '#1f2937' }}>
       {/* Notification */}
       {notification && (
         <div style={{
@@ -427,7 +435,7 @@ const AdminDashboard = () => {
         <h1 style={{
           fontSize: '2.5rem',
           fontWeight: 'bold',
-          color: '#111827'
+          color: isDarkTheme ? '#fff' : '#111827'
         }}>
           Admin Dashboard
         </h1>
@@ -495,15 +503,15 @@ const AdminDashboard = () => {
             textAlign: 'center',
             cursor: 'pointer',
             border: activeFilter === 'upcoming-job' ? '2px solid #3b82f6' : '1px solid #e5e7eb',
-            background: activeFilter === 'upcoming-job' ? 'rgba(59, 130, 246, 0.1)' : '#ffffff',
+            background: activeFilter === 'upcoming-job' ? '#3b82f6' : '#ffffff',
             transition: 'all 0.3s ease',
             color: '#1f2937'
           }}
         >
-          <h3 style={{ color: '#3b82f6', fontSize: '2rem', marginBottom: '0.5rem' }}>
+          <h3 style={{ color: activeFilter === 'upcoming-job' ? '#ffffff' : '#3b82f6', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'upcoming-job').length}
           </h3>
-          <p style={{ color: '#6b7280', margin: 0 }}>Upcoming Jobs</p>
+          <p style={{ color: activeFilter === 'upcoming-job' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Upcoming Jobs</p>
         </button>
         
         <button
@@ -513,15 +521,15 @@ const AdminDashboard = () => {
             textAlign: 'center',
             cursor: 'pointer',
             border: activeFilter === 'result' ? '2px solid #10b981' : '1px solid #e5e7eb',
-            background: activeFilter === 'result' ? 'rgba(16, 185, 129, 0.1)' : '#ffffff',
+            background: activeFilter === 'result' ? '#10b981' : '#ffffff',
             transition: 'all 0.3s ease',
             color: '#1f2937'
           }}
         >
-          <h3 style={{ color: '#10b981', fontSize: '2rem', marginBottom: '0.5rem' }}>
+          <h3 style={{ color: activeFilter === 'result' ? '#ffffff' : '#10b981', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'result').length}
           </h3>
-          <p style={{ color: '#6b7280', margin: 0 }}>Results</p>
+          <p style={{ color: activeFilter === 'result' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Results</p>
         </button>
         
         <button
@@ -531,15 +539,15 @@ const AdminDashboard = () => {
             textAlign: 'center',
             cursor: 'pointer',
             border: activeFilter === 'admit-card' ? '2px solid #f59e0b' : '1px solid #e5e7eb',
-            background: activeFilter === 'admit-card' ? 'rgba(245, 158, 11, 0.1)' : '#ffffff',
+            background: activeFilter === 'admit-card' ? '#f59e0b' : '#ffffff',
             transition: 'all 0.3s ease',
             color: '#1f2937'
           }}
         >
-          <h3 style={{ color: '#f59e0b', fontSize: '2rem', marginBottom: '0.5rem' }}>
+          <h3 style={{ color: activeFilter === 'admit-card' ? '#ffffff' : '#f59e0b', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'admit-card').length}
           </h3>
-          <p style={{ color: '#6b7280', margin: 0 }}>Admit Cards</p>
+          <p style={{ color: activeFilter === 'admit-card' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Admit Cards</p>
         </button>
         
         <button
@@ -549,15 +557,15 @@ const AdminDashboard = () => {
             textAlign: 'center',
             cursor: 'pointer',
             border: activeFilter === 'scholarship' ? '2px solid #8b5cf6' : '1px solid #e5e7eb',
-            background: activeFilter === 'scholarship' ? 'rgba(139, 92, 246, 0.1)' : '#ffffff',
+            background: activeFilter === 'scholarship' ? '#8b5cf6' : '#ffffff',
             transition: 'all 0.3s ease',
             color: '#1f2937'
           }}
         >
-          <h3 style={{ color: '#8b5cf6', fontSize: '2rem', marginBottom: '0.5rem' }}>
+          <h3 style={{ color: activeFilter === 'scholarship' ? '#ffffff' : '#8b5cf6', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'scholarship').length}
           </h3>
-          <p style={{ color: '#6b7280', margin: 0 }}>Scholarships</p>
+          <p style={{ color: activeFilter === 'scholarship' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Scholarships</p>
         </button>
         
         <button
@@ -567,15 +575,15 @@ const AdminDashboard = () => {
             textAlign: 'center',
             cursor: 'pointer',
             border: activeFilter === 'admission' ? '2px solid #06b6d4' : '1px solid #e5e7eb',
-            background: activeFilter === 'admission' ? 'rgba(6, 182, 212, 0.1)' : '#ffffff',
+            background: activeFilter === 'admission' ? '#06b6d4' : '#ffffff',
             transition: 'all 0.3s ease',
             color: '#1f2937'
           }}
         >
-          <h3 style={{ color: '#06b6d4', fontSize: '2rem', marginBottom: '0.5rem' }}>
+          <h3 style={{ color: activeFilter === 'admission' ? '#ffffff' : '#06b6d4', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).filter(job => job.category === 'admission').length}
           </h3>
-          <p style={{ color: '#6b7280', margin: 0 }}>Admissions</p>
+          <p style={{ color: activeFilter === 'admission' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Admissions</p>
         </button>
         
         <button
@@ -584,16 +592,16 @@ const AdminDashboard = () => {
           style={{
             textAlign: 'center',
             cursor: 'pointer',
-            border: activeFilter === 'all' ? '2px solid #6366f1' : isDarkTheme ? '1px solid #ffffff' : '1px solid #333333',
-            background: isDarkTheme ? '#ffffff' : '#000000',
+            border: activeFilter === 'all' ? '2px solid #ef4444' : '1px solid #e5e7eb',
+            background: activeFilter === 'all' ? '#ef4444' : '#ffffff',
             transition: 'all 0.3s ease',
-            color: isDarkTheme ? '#000000' : '#ffffff'
+            color: '#1f2937'
           }}
         >
-          <h3 style={{ color: isDarkTheme ? '#000000' : '#ffffff', fontSize: '2rem', marginBottom: '0.5rem' }}>
+          <h3 style={{ color: activeFilter === 'all' ? '#ffffff' : '#ef4444', fontSize: '2rem', marginBottom: '0.5rem' }}>
             {(jobs || []).length}
           </h3>
-          <p style={{ color: isDarkTheme ? '#000000' : '#ffffff', margin: 0 }}>Total Jobs</p>
+          <p style={{ color: activeFilter === 'all' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Total Jobs</p>
         </button>
       </div>
 
@@ -693,7 +701,7 @@ const AdminDashboard = () => {
               }}
             >
               <section style={modalSectionStyle}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem' }}>General Information</h3>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', color: isDarkTheme ? '#fff' : '#374151' }}>General Information</h3>
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
@@ -725,7 +733,7 @@ const AdminDashboard = () => {
               </section>
 
               <section style={modalSectionStyle}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem' }}>Classification & Timeline</h3>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', color: isDarkTheme ? '#fff' : '#374151' }}>Classification & Timeline</h3>
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
@@ -749,7 +757,7 @@ const AdminDashboard = () => {
                   </div>
                   {formData.category === 'upcoming-job' && (
                     <div>
-                      <label style={labelStyle}>Posts *</label>
+                      <label style={labelStyle}>Posts</label>
                       <input
                         type="number"
                         name="posts"
@@ -763,7 +771,7 @@ const AdminDashboard = () => {
                   )}
                   {formData.category === 'upcoming-job' && (
                     <div>
-                      <label style={labelStyle}>Start Date *</label>
+                      <label style={labelStyle}>Start Date</label>
                       <input
                         type="date"
                         name="startDate"
@@ -776,7 +784,7 @@ const AdminDashboard = () => {
                   )}
                   {(formData.category === 'scholarship' || formData.category === 'admission') && (
                     <div>
-                      <label style={labelStyle}>Start Date *</label>
+                      <label style={labelStyle}>Start Date</label>
                       <input
                         type="date"
                         name="startDate"
@@ -805,12 +813,10 @@ const AdminDashboard = () => {
               </section>
 
               <section style={modalSectionStyle}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem' }}>Narrative Blocks</h3>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', color: isDarkTheme ? '#fff' : '#374151' }}>Narrative Blocks</h3>
                 <div style={{ display: 'grid', gap: '1rem' }}>
                   <div>
-                    <label style={labelStyle}>
-                      Description{(formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') ? ' *' : ''}
-                    </label>
+                    <label style={labelStyle}>Description</label>
                     <textarea
                       name="description"
                       value={formData.description}
@@ -820,9 +826,7 @@ const AdminDashboard = () => {
                     />
                   </div>
                   <div>
-                    <label style={labelStyle}>
-                      Eligibility{(formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') ? ' *' : ''}
-                    </label>
+                    <label style={labelStyle}>Eligibility</label>
                     <textarea
                       name="eligibility"
                       value={formData.eligibility}
@@ -835,16 +839,14 @@ const AdminDashboard = () => {
               </section>
 
               <section style={modalSectionStyle}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem' }}>Fee, Compensation & Links</h3>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', color: isDarkTheme ? '#fff' : '#374151' }}>Fee, Compensation & Links</h3>
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
                   gap: '1rem'
                 }}>
                   <div>
-                    <label style={labelStyle}>
-                      Application Fee{(formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') ? ' *' : ''}
-                    </label>
+                    <label style={labelStyle}>Application Fee</label>
                     <input
                       type="text"
                       name="applicationFee"
@@ -857,7 +859,7 @@ const AdminDashboard = () => {
                   </div>
                   {formData.category === 'upcoming-job' && (
                     <div>
-                      <label style={labelStyle}>Salary / Pay *</label>
+                      <label style={labelStyle}>Salary / Pay</label>
                       <input
                         type="text"
                         name="salary"
@@ -945,16 +947,16 @@ const AdminDashboard = () => {
               {categorySections.length > 0 && (
                 <section style={{
                   ...modalSectionStyle,
-                  background: 'rgba(15, 23, 42, 0.9)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  color: '#e2e8f0'
+                  background: isDarkTheme ? 'rgba(15, 23, 42, 0.9)' : 'rgba(248, 250, 252, 0.95)',
+                  border: isDarkTheme ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid #e5e7eb',
+                  color: isDarkTheme ? '#e2e8f0' : '#374151'
                 }}>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem', color: '#fff' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem', color: isDarkTheme ? '#fff' : '#374151' }}>
                     Category Specific Spotlight
                   </h3>
                   <p style={{
                     marginBottom: '1.5rem',
-                    color: '#cbd5f5'
+                    color: isDarkTheme ? '#cbd5f5' : '#6b7280'
                   }}>
                     Fill the sections that matter. Only populated blocks are rendered for candidates, letting you keep the layout clean.
                   </p>
@@ -963,7 +965,7 @@ const AdminDashboard = () => {
                     <div key={field.key} style={{ marginBottom: '1.15rem' }}>
                       <label style={{
                         ...labelStyle,
-                        color: '#fff'
+                        color: isDarkTheme ? '#fff' : '#374151'
                       }}>
                         {field.label}
                       </label>
@@ -975,8 +977,8 @@ const AdminDashboard = () => {
                           placeholder={field.placeholder}
                           style={{
                             ...inputStyle,
-                            background: 'rgba(15, 23, 42, 0.65)',
-                            color: '#fff'
+                            background: isDarkTheme ? 'rgba(15, 23, 42, 0.65)' : '#f9fafb',
+                            color: isDarkTheme ? '#fff' : '#374151'
                           }}
                         />
                       ) : (
@@ -987,8 +989,8 @@ const AdminDashboard = () => {
                           rows={field.type === 'textarea' ? 4 : 2}
                           style={{
                             ...textareaStyle,
-                            background: 'rgba(15, 23, 42, 0.65)',
-                            color: '#fff'
+                            background: isDarkTheme ? 'rgba(15, 23, 42, 0.65)' : '#f9fafb',
+                            color: isDarkTheme ? '#fff' : '#374151'
                           }}
                         />
                       )}
@@ -996,7 +998,7 @@ const AdminDashboard = () => {
                         <p style={{
                           marginTop: '0.35rem',
                           fontSize: '0.85rem',
-                          color: '#cbd5f5'
+                          color: isDarkTheme ? '#cbd5f5' : '#6b7280'
                         }}>
                           {field.helper}
                         </p>
@@ -1037,7 +1039,7 @@ const AdminDashboard = () => {
           fontSize: '1.5rem',
           fontWeight: '600',
           marginBottom: '1.5rem',
-          color: '#111827'
+          color: isDarkTheme ? '#fff' : '#111827'
         }}>
           {activeFilter === 'all' ? 'All Jobs' : 
            activeFilter === 'upcoming-job' ? 'Upcoming Jobs' :
@@ -1051,7 +1053,7 @@ const AdminDashboard = () => {
           <div style={{
             textAlign: 'center',
             padding: '3rem',
-            color: 'var(--color-card-muted)'
+            color: isDarkTheme ? '#9ca3af' : '#374151'
           }}>
             <p>No jobs found. Create your first job!</p>
           </div>
@@ -1060,36 +1062,38 @@ const AdminDashboard = () => {
             <table style={{
               width: '100%',
               borderCollapse: 'collapse',
-              color: '#374151'
+              color: isDarkTheme ? '#e2e8f0' : '#111827'
             }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.15)' }}>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Title</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Organization</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Category</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Last Date</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Posts</th>
-                  <th style={{ padding: '12px', textAlign: 'center', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Actions</th>
+                <tr style={{ borderBottom: isDarkTheme ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid #e5e7eb' }}>
+                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Title</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Organization</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Category</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Last Date</th>
+                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Posts</th>
+                  <th style={{ padding: '12px', textAlign: 'center', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {(filteredJobs || []).map(job => (
-                  <tr key={job._id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                  <tr key={job._id} style={{ borderBottom: isDarkTheme ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid #f3f4f6' }}>
                     <td style={{ padding: '12px' }}>
-                      <div style={{ fontWeight: '600', marginBottom: '2px' }}>
+                      <div style={{ fontWeight: '600', marginBottom: '2px', color: isDarkTheme ? '#fff' : '#111827' }}>
                         {job.title}
                       </div>
-                      <div style={{ fontSize: '0.875rem', color: 'var(--color-card-muted)' }}>
+                      <div style={{ fontSize: '0.875rem', color: isDarkTheme ? '#9ca3af' : '#374151' }}>
                         Created: {formatDate(job.createdAt)}
                       </div>
                     </td>
-                    <td style={{ padding: '12px' }}>{job.organization}</td>
-                    <td style={{ padding: '12px' }}>
+                    <td style={{ padding: '12px', color: isDarkTheme ? '#e2e8f0' : '#111827' }}>{job.organization}</td>
+                    <td style={{ padding: '12px', minWidth: '120px' }}>
                       <span style={{
                         padding: '4px 8px',
                         borderRadius: '12px',
                         fontSize: '0.75rem',
                         fontWeight: '500',
+                        whiteSpace: 'nowrap',
+                        display: 'inline-block',
                         background: job.category === 'result' ? 'rgba(16, 185, 129, 0.2)' : 
                                    job.category === 'admit-card' ? 'rgba(59, 130, 246, 0.2)' : 
                                    job.category === 'scholarship' ? 'rgba(139, 92, 246, 0.2)' :
@@ -1102,8 +1106,8 @@ const AdminDashboard = () => {
                         {getCategoryLabel(job.category)}
                       </span>
                     </td>
-                    <td style={{ padding: '12px' }}>{formatDate(job.lastDate)}</td>
-                    <td style={{ padding: '12px' }}>{job.posts}</td>
+                    <td style={{ padding: '12px', color: isDarkTheme ? '#e2e8f0' : '#111827' }}>{formatDate(job.lastDate)}</td>
+                    <td style={{ padding: '12px', color: isDarkTheme ? '#e2e8f0' : '#111827' }}>{job.posts}</td>
                     <td style={{ padding: '12px', textAlign: 'center' }}>
                       <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
                         <button
@@ -1114,7 +1118,7 @@ const AdminDashboard = () => {
                             borderRadius: '6px',
                             padding: '6px',
                             cursor: 'pointer',
-                            color: 'var(--color-card-text)'
+                            color: isDarkTheme ? '#9ca3af' : '#374151'
                           }}
                           title="View"
                         >

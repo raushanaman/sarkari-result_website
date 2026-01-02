@@ -193,37 +193,12 @@ const AdminDashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Basic validation
-    if (!formData.title || !formData.organization || !formData.lastDate || !formData.applyLink) {
-      setNotification('❌ Please fill all required fields.');
+    // Only validate fields with asterisks (*) - matches backend
+    if (!formData.title || !formData.organization || !formData.category || 
+        !formData.lastDate || !formData.applyLink) {
+      setNotification('❌ Please fill all required fields: Title, Organization, Category, Last Date, and Apply Link.');
       setTimeout(() => setNotification(''), 5000);
       return;
-    }
-    
-    // Category-specific validation for description, eligibility, and application fee
-    if (formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') {
-      if (!formData.description || !formData.eligibility || !formData.applicationFee) {
-        setNotification('❌ Please fill description, eligibility, and application fee.');
-        setTimeout(() => setNotification(''), 5000);
-        return;
-      }
-    }
-    
-    // Category-specific validation
-    if (formData.category === 'upcoming-job') {
-      if (!formData.startDate || !formData.salary || !formData.posts) {
-        setNotification('❌ Please fill all required fields for job posting.');
-        setTimeout(() => setNotification(''), 5000);
-        return;
-      }
-    }
-    
-    if (formData.category === 'scholarship' || formData.category === 'admission') {
-      if (!formData.startDate) {
-        setNotification('❌ Please fill start date for ' + formData.category + '.');
-        setTimeout(() => setNotification(''), 5000);
-        return;
-      }
     }
     
     try {

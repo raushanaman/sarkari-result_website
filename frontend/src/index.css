@@ -1232,6 +1232,30 @@ body.dark-theme .card-rich a {
     display: block !important;
   }
 }
+
+/* Privacy Policy and Disclaimer - Force white text in both themes */
+body .container h1,
+body .container h2,
+body .container p,
+body .container li,
+body .container strong,
+body .container div {
+  color: #ffffff !important;
+}
+
+/* Specific overrides for Privacy Policy and Disclaimer pages */
+body .prose h1,
+body .prose h2,
+body .prose p,
+body .prose li,
+body .prose strong {
+  color: #ffffff !important;
+}
+
+/* Yellow warning box text should remain readable */
+body .bg-yellow-100 p {
+  color: #92400e !important;
+}
 /* Professional Two-Device Responsive System */
 
 /* Mobile Devices (up to 768px) */

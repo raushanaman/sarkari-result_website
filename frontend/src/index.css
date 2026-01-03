@@ -1234,6 +1234,15 @@ body.dark-theme .card-rich a {
   }
 }
 
+/* Force black color for Back to Home button in all themes */
+.category-page a[href="/"] {
+  color: #000000 !important;
+}
+
+.category-page a[href="/"] * {
+  color: #000000 !important;
+}
+
 /* Privacy Policy and Disclaimer - Force white text in both themes */
 body .container h1,
 body .container h2,

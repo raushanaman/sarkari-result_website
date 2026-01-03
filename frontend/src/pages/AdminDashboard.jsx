@@ -16,7 +16,7 @@ const AdminDashboard = () => {
   const [editingJob, setEditingJob] = useState(null);
   const [notification, setNotification] = useState('');
   const [selectedJobsForDeletion, setSelectedJobsForDeletion] = useState([]);
-  const [isDarkTheme, setIsDarkTheme] = useState(document.body.classList.contains('dark-theme'));
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [youtubeData, setYoutubeData] = useState({
     channelUrl: ''
   });
@@ -40,14 +40,7 @@ const AdminDashboard = () => {
   });
   const navigate = useNavigate();
   
-  // Theme detection with observer
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDarkTheme(document.body.classList.contains('dark-theme'));
-    });
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
-  }, []);
+  // Theme detection removed - always dark theme
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -378,21 +371,28 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="container" style={{ padding: '2rem 0', color: isDarkTheme ? '#e2e8f0' : '#1f2937' }}>
+    <div style={{ 
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)',
+      color: '#f1f5f9'
+    }}>
       {/* Notification */}
       {notification && (
         <div style={{
           position: 'fixed',
           top: '20px',
           right: '20px',
-          background: notification.includes('✅') ? '#10b981' : '#ef4444',
+          background: notification.includes('✅') 
+            ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' 
+            : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
           color: 'white',
           padding: '1rem 2rem',
-          borderRadius: '8px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          borderRadius: '12px',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
           zIndex: 1000,
           fontSize: '1rem',
-          fontWeight: '500'
+          fontWeight: '500',
+          backdropFilter: 'blur(10px)'
         }}>
           {notification}
         </div>
@@ -400,199 +400,482 @@ const AdminDashboard = () => {
       
       {/* Header */}
       <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '2rem',
-        flexWrap: 'wrap',
-        gap: '1rem'
+        background: 'rgba(15, 23, 42, 0.9)',
+        backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(148, 163, 184, 0.2)',
+        padding: '2rem 0',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100
       }}>
-        <h1 style={{
-          fontSize: '2.5rem',
-          fontWeight: 'bold',
-          color: isDarkTheme ? '#fff' : '#111827'
-        }}>
-          Admin Dashboard
-        </h1>
-        
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          <button
-            onClick={() => setShowForm(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
-              color: 'white',
-              border: 'none',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '8px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              fontSize: '0.95rem'
-            }}
-          >
-            <FaPlus />
-            Add New Job
-          </button>
-          
-          <button
-            onClick={() => setShowYouTubeForm(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-              color: 'white',
-              border: 'none',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '8px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              fontSize: '0.95rem'
-            }}
-          >
-            <FaYoutube />
-            YT Update
-          </button>
-          
-          <button
-            onClick={handleLogout}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              background: 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
-              color: 'white',
-              border: 'none',
-              padding: '0.75rem 1.5rem',
-              borderRadius: '8px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              fontSize: '0.95rem'
-            }}
-          >
-            <FaSignOutAlt />
-            Logout
-          </button>
+        <div className="container">
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '1rem'
+          }}>
+            <div>
+              <h1 style={{
+                fontSize: '2.5rem',
+                fontWeight: '700',
+                color: isDarkTheme ? '#f1f5f9' : '#1e293b',
+                margin: 0,
+                marginBottom: '0.5rem'
+              }}>
+                Admin Dashboard
+              </h1>
+              <p style={{
+                color: isDarkTheme ? '#94a3b8' : '#64748b',
+                fontSize: '1.1rem',
+                margin: 0
+              }}>
+                Manage your content with ease
+              </p>
+            </div>
+            
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setShowForm(true)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.875rem 1.75rem',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  fontSize: '0.95rem',
+                  boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 4px 15px rgba(59, 130, 246, 0.3)';
+                }}
+              >
+                <FaPlus />
+                Add New Job
+              </button>
+              
+              <button
+                onClick={() => setShowYouTubeForm(true)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.875rem 1.75rem',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  fontSize: '0.95rem',
+                  boxShadow: '0 4px 15px rgba(239, 68, 68, 0.3)',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.3)';
+                }}
+              >
+                <FaYoutube />
+                YT Update
+              </button>
+              
+              <button
+                onClick={handleLogout}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: isDarkTheme 
+                    ? 'linear-gradient(135deg, #64748b 0%, #475569 100%)' 
+                    : 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.875rem 1.75rem',
+                  borderRadius: '12px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  fontSize: '0.95rem',
+                  boxShadow: '0 4px 15px rgba(107, 114, 128, 0.3)',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 8px 25px rgba(107, 114, 128, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 4px 15px rgba(107, 114, 128, 0.3)';
+                }}
+              >
+                <FaSignOutAlt />
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Stats - Now Clickable */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '1rem',
-        marginBottom: '2rem'
-      }}>
-        <button
-          onClick={() => handleFilterChange('upcoming-job')}
-          className="card card-rich"
-          style={{
-            textAlign: 'center',
-            cursor: 'pointer',
-            border: activeFilter === 'upcoming-job' ? '2px solid #3b82f6' : '1px solid #e5e7eb',
-            background: activeFilter === 'upcoming-job' ? '#3b82f6' : '#ffffff',
-            transition: 'all 0.3s ease',
-            color: '#1f2937'
-          }}
-        >
-          <h3 style={{ color: activeFilter === 'upcoming-job' ? '#ffffff' : '#3b82f6', fontSize: '2rem', marginBottom: '0.5rem' }}>
-            {(jobs || []).filter(job => job.category === 'upcoming-job').length}
-          </h3>
-          <p style={{ color: activeFilter === 'upcoming-job' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Upcoming Jobs</p>
-        </button>
-        
-        <button
-          onClick={() => handleFilterChange('result')}
-          className="card card-rich"
-          style={{
-            textAlign: 'center',
-            cursor: 'pointer',
-            border: activeFilter === 'result' ? '2px solid #10b981' : '1px solid #e5e7eb',
-            background: activeFilter === 'result' ? '#10b981' : '#ffffff',
-            transition: 'all 0.3s ease',
-            color: '#1f2937'
-          }}
-        >
-          <h3 style={{ color: activeFilter === 'result' ? '#ffffff' : '#10b981', fontSize: '2rem', marginBottom: '0.5rem' }}>
-            {(jobs || []).filter(job => job.category === 'result').length}
-          </h3>
-          <p style={{ color: activeFilter === 'result' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Results</p>
-        </button>
-        
-        <button
-          onClick={() => handleFilterChange('admit-card')}
-          className="card card-rich"
-          style={{
-            textAlign: 'center',
-            cursor: 'pointer',
-            border: activeFilter === 'admit-card' ? '2px solid #f59e0b' : '1px solid #e5e7eb',
-            background: activeFilter === 'admit-card' ? '#f59e0b' : '#ffffff',
-            transition: 'all 0.3s ease',
-            color: '#1f2937'
-          }}
-        >
-          <h3 style={{ color: activeFilter === 'admit-card' ? '#ffffff' : '#f59e0b', fontSize: '2rem', marginBottom: '0.5rem' }}>
-            {(jobs || []).filter(job => job.category === 'admit-card').length}
-          </h3>
-          <p style={{ color: activeFilter === 'admit-card' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Admit Cards</p>
-        </button>
-        
-        <button
-          onClick={() => handleFilterChange('scholarship')}
-          className="card card-rich"
-          style={{
-            textAlign: 'center',
-            cursor: 'pointer',
-            border: activeFilter === 'scholarship' ? '2px solid #8b5cf6' : '1px solid #e5e7eb',
-            background: activeFilter === 'scholarship' ? '#8b5cf6' : '#ffffff',
-            transition: 'all 0.3s ease',
-            color: '#1f2937'
-          }}
-        >
-          <h3 style={{ color: activeFilter === 'scholarship' ? '#ffffff' : '#8b5cf6', fontSize: '2rem', marginBottom: '0.5rem' }}>
-            {(jobs || []).filter(job => job.category === 'scholarship').length}
-          </h3>
-          <p style={{ color: activeFilter === 'scholarship' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Scholarships</p>
-        </button>
-        
-        <button
-          onClick={() => handleFilterChange('admission')}
-          className="card card-rich"
-          style={{
-            textAlign: 'center',
-            cursor: 'pointer',
-            border: activeFilter === 'admission' ? '2px solid #06b6d4' : '1px solid #e5e7eb',
-            background: activeFilter === 'admission' ? '#06b6d4' : '#ffffff',
-            transition: 'all 0.3s ease',
-            color: '#1f2937'
-          }}
-        >
-          <h3 style={{ color: activeFilter === 'admission' ? '#ffffff' : '#06b6d4', fontSize: '2rem', marginBottom: '0.5rem' }}>
-            {(jobs || []).filter(job => job.category === 'admission').length}
-          </h3>
-          <p style={{ color: activeFilter === 'admission' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Admissions</p>
-        </button>
-        
-        <button
-          onClick={() => handleFilterChange('all')}
-          className="card card-rich"
-          style={{
-            textAlign: 'center',
-            cursor: 'pointer',
-            border: activeFilter === 'all' ? '2px solid #ef4444' : '1px solid #e5e7eb',
-            background: activeFilter === 'all' ? '#ef4444' : '#ffffff',
-            transition: 'all 0.3s ease',
-            color: '#1f2937'
-          }}
-        >
-          <h3 style={{ color: activeFilter === 'all' ? '#ffffff' : '#ef4444', fontSize: '2rem', marginBottom: '0.5rem' }}>
-            {(jobs || []).length}
-          </h3>
-          <p style={{ color: activeFilter === 'all' ? '#e5e7eb' : '#6b7280', margin: 0 }}>Total Jobs</p>
-        </button>
-      </div>
+      {/* Stats Cards */}
+      <div className="container" style={{ padding: '3rem 0' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.5rem',
+          marginBottom: '3rem'
+        }}>
+          <button
+            onClick={() => handleFilterChange('upcoming-job')}
+            style={{
+              background: isDarkTheme 
+                ? (activeFilter === 'upcoming-job' 
+                  ? 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' 
+                  : 'rgba(30, 41, 59, 0.8)')
+                : (activeFilter === 'upcoming-job' 
+                  ? 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' 
+                  : '#ffffff'),
+              border: isDarkTheme 
+                ? '1px solid rgba(148, 163, 184, 0.2)' 
+                : '1px solid rgba(0, 0, 0, 0.1)',
+              borderRadius: '16px',
+              padding: '2rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: isDarkTheme 
+                ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                : '0 8px 32px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+              color: activeFilter === 'upcoming-job' ? '#ffffff' : (isDarkTheme ? '#f1f5f9' : '#1e293b')
+            }}
+            onMouseEnter={(e) => {
+              if (activeFilter !== 'upcoming-job') {
+                e.target.style.transform = 'translateY(-4px)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 12px 40px rgba(0, 0, 0, 0.4)' 
+                  : '0 12px 40px rgba(0, 0, 0, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeFilter !== 'upcoming-job') {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                  : '0 8px 32px rgba(0, 0, 0, 0.1)';
+              }
+            }}
+          >
+            <h3 style={{ 
+              fontSize: '3rem', 
+              fontWeight: '700', 
+              marginBottom: '0.5rem',
+              color: activeFilter === 'upcoming-job' ? '#ffffff' : '#3b82f6'
+            }}>
+              {(jobs || []).filter(job => job.category === 'upcoming-job').length}
+            </h3>
+            <p style={{ 
+              margin: 0, 
+              fontSize: '1.1rem', 
+              fontWeight: '500',
+              color: activeFilter === 'upcoming-job' ? 'rgba(255, 255, 255, 0.9)' : (isDarkTheme ? '#94a3b8' : '#64748b')
+            }}>Upcoming Jobs</p>
+          </button>
+          
+          <button
+            onClick={() => handleFilterChange('result')}
+            style={{
+              background: isDarkTheme 
+                ? (activeFilter === 'result' 
+                  ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' 
+                  : 'rgba(30, 41, 59, 0.8)')
+                : (activeFilter === 'result' 
+                  ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' 
+                  : '#ffffff'),
+              border: isDarkTheme 
+                ? '1px solid rgba(148, 163, 184, 0.2)' 
+                : '1px solid rgba(0, 0, 0, 0.1)',
+              borderRadius: '16px',
+              padding: '2rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: isDarkTheme 
+                ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                : '0 8px 32px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+              color: activeFilter === 'result' ? '#ffffff' : (isDarkTheme ? '#f1f5f9' : '#1e293b')
+            }}
+            onMouseEnter={(e) => {
+              if (activeFilter !== 'result') {
+                e.target.style.transform = 'translateY(-4px)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 12px 40px rgba(0, 0, 0, 0.4)' 
+                  : '0 12px 40px rgba(0, 0, 0, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeFilter !== 'result') {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                  : '0 8px 32px rgba(0, 0, 0, 0.1)';
+              }
+            }}
+          >
+            <h3 style={{ 
+              fontSize: '3rem', 
+              fontWeight: '700', 
+              marginBottom: '0.5rem',
+              color: activeFilter === 'result' ? '#ffffff' : '#10b981'
+            }}>
+              {(jobs || []).filter(job => job.category === 'result').length}
+            </h3>
+            <p style={{ 
+              margin: 0, 
+              fontSize: '1.1rem', 
+              fontWeight: '500',
+              color: activeFilter === 'result' ? 'rgba(255, 255, 255, 0.9)' : (isDarkTheme ? '#94a3b8' : '#64748b')
+            }}>Results</p>
+          </button>
+          
+          <button
+            onClick={() => handleFilterChange('admit-card')}
+            style={{
+              background: isDarkTheme 
+                ? (activeFilter === 'admit-card' 
+                  ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' 
+                  : 'rgba(30, 41, 59, 0.8)')
+                : (activeFilter === 'admit-card' 
+                  ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' 
+                  : '#ffffff'),
+              border: isDarkTheme 
+                ? '1px solid rgba(148, 163, 184, 0.2)' 
+                : '1px solid rgba(0, 0, 0, 0.1)',
+              borderRadius: '16px',
+              padding: '2rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: isDarkTheme 
+                ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                : '0 8px 32px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+              color: activeFilter === 'admit-card' ? '#ffffff' : (isDarkTheme ? '#f1f5f9' : '#1e293b')
+            }}
+            onMouseEnter={(e) => {
+              if (activeFilter !== 'admit-card') {
+                e.target.style.transform = 'translateY(-4px)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 12px 40px rgba(0, 0, 0, 0.4)' 
+                  : '0 12px 40px rgba(0, 0, 0, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeFilter !== 'admit-card') {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                  : '0 8px 32px rgba(0, 0, 0, 0.1)';
+              }
+            }}
+          >
+            <h3 style={{ 
+              fontSize: '3rem', 
+              fontWeight: '700', 
+              marginBottom: '0.5rem',
+              color: activeFilter === 'admit-card' ? '#ffffff' : '#f59e0b'
+            }}>
+              {(jobs || []).filter(job => job.category === 'admit-card').length}
+            </h3>
+            <p style={{ 
+              margin: 0, 
+              fontSize: '1.1rem', 
+              fontWeight: '500',
+              color: activeFilter === 'admit-card' ? 'rgba(255, 255, 255, 0.9)' : (isDarkTheme ? '#94a3b8' : '#64748b')
+            }}>Admit Cards</p>
+          </button>
+          
+          <button
+            onClick={() => handleFilterChange('scholarship')}
+            style={{
+              background: isDarkTheme 
+                ? (activeFilter === 'scholarship' 
+                  ? 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)' 
+                  : 'rgba(30, 41, 59, 0.8)')
+                : (activeFilter === 'scholarship' 
+                  ? 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)' 
+                  : '#ffffff'),
+              border: isDarkTheme 
+                ? '1px solid rgba(148, 163, 184, 0.2)' 
+                : '1px solid rgba(0, 0, 0, 0.1)',
+              borderRadius: '16px',
+              padding: '2rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: isDarkTheme 
+                ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                : '0 8px 32px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+              color: activeFilter === 'scholarship' ? '#ffffff' : (isDarkTheme ? '#f1f5f9' : '#1e293b')
+            }}
+            onMouseEnter={(e) => {
+              if (activeFilter !== 'scholarship') {
+                e.target.style.transform = 'translateY(-4px)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 12px 40px rgba(0, 0, 0, 0.4)' 
+                  : '0 12px 40px rgba(0, 0, 0, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeFilter !== 'scholarship') {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                  : '0 8px 32px rgba(0, 0, 0, 0.1)';
+              }
+            }}
+          >
+            <h3 style={{ 
+              fontSize: '3rem', 
+              fontWeight: '700', 
+              marginBottom: '0.5rem',
+              color: activeFilter === 'scholarship' ? '#ffffff' : '#8b5cf6'
+            }}>
+              {(jobs || []).filter(job => job.category === 'scholarship').length}
+            </h3>
+            <p style={{ 
+              margin: 0, 
+              fontSize: '1.1rem', 
+              fontWeight: '500',
+              color: activeFilter === 'scholarship' ? 'rgba(255, 255, 255, 0.9)' : (isDarkTheme ? '#94a3b8' : '#64748b')
+            }}>Scholarships</p>
+          </button>
+          
+          <button
+            onClick={() => handleFilterChange('admission')}
+            style={{
+              background: isDarkTheme 
+                ? (activeFilter === 'admission' 
+                  ? 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)' 
+                  : 'rgba(30, 41, 59, 0.8)')
+                : (activeFilter === 'admission' 
+                  ? 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)' 
+                  : '#ffffff'),
+              border: isDarkTheme 
+                ? '1px solid rgba(148, 163, 184, 0.2)' 
+                : '1px solid rgba(0, 0, 0, 0.1)',
+              borderRadius: '16px',
+              padding: '2rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: isDarkTheme 
+                ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                : '0 8px 32px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+              color: activeFilter === 'admission' ? '#ffffff' : (isDarkTheme ? '#f1f5f9' : '#1e293b')
+            }}
+            onMouseEnter={(e) => {
+              if (activeFilter !== 'admission') {
+                e.target.style.transform = 'translateY(-4px)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 12px 40px rgba(0, 0, 0, 0.4)' 
+                  : '0 12px 40px rgba(0, 0, 0, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeFilter !== 'admission') {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                  : '0 8px 32px rgba(0, 0, 0, 0.1)';
+              }
+            }}
+          >
+            <h3 style={{ 
+              fontSize: '3rem', 
+              fontWeight: '700', 
+              marginBottom: '0.5rem',
+              color: activeFilter === 'admission' ? '#ffffff' : '#06b6d4'
+            }}>
+              {(jobs || []).filter(job => job.category === 'admission').length}
+            </h3>
+            <p style={{ 
+              margin: 0, 
+              fontSize: '1.1rem', 
+              fontWeight: '500',
+              color: activeFilter === 'admission' ? 'rgba(255, 255, 255, 0.9)' : (isDarkTheme ? '#94a3b8' : '#64748b')
+            }}>Admissions</p>
+          </button>
+          
+          <button
+            onClick={() => handleFilterChange('all')}
+            style={{
+              background: isDarkTheme 
+                ? (activeFilter === 'all' 
+                  ? 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' 
+                  : 'rgba(30, 41, 59, 0.8)')
+                : (activeFilter === 'all' 
+                  ? 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' 
+                  : '#ffffff'),
+              border: isDarkTheme 
+                ? '1px solid rgba(148, 163, 184, 0.2)' 
+                : '1px solid rgba(0, 0, 0, 0.1)',
+              borderRadius: '16px',
+              padding: '2rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: isDarkTheme 
+                ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                : '0 8px 32px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+              color: activeFilter === 'all' ? '#ffffff' : (isDarkTheme ? '#f1f5f9' : '#1e293b')
+            }}
+            onMouseEnter={(e) => {
+              if (activeFilter !== 'all') {
+                e.target.style.transform = 'translateY(-4px)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 12px 40px rgba(0, 0, 0, 0.4)' 
+                  : '0 12px 40px rgba(0, 0, 0, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeFilter !== 'all') {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                  : '0 8px 32px rgba(0, 0, 0, 0.1)';
+              }
+            }}
+          >
+            <h3 style={{ 
+              fontSize: '3rem', 
+              fontWeight: '700', 
+              marginBottom: '0.5rem',
+              color: activeFilter === 'all' ? '#ffffff' : '#ef4444'
+            }}>
+              {(jobs || []).length}
+            </h3>
+            <p style={{ 
+              margin: 0, 
+              fontSize: '1.1rem', 
+              fontWeight: '500',
+              color: activeFilter === 'all' ? 'rgba(255, 255, 255, 0.9)' : (isDarkTheme ? '#94a3b8' : '#64748b')
+            }}>Total Jobs</p>
+          </button>
+        </div>
 
       {/* Job Form Modal */}
       {showForm && (
@@ -805,7 +1088,7 @@ const AdminDashboard = () => {
                 <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', color: isDarkTheme ? '#fff' : '#374151' }}>Narrative Blocks</h3>
                 <div style={{ display: 'grid', gap: '1rem' }}>
                   <div>
-                    <label style={labelStyle}>Description</label>
+                    <label style={labelStyle}>Description{(formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') ? ' *' : ''}</label>
                     <textarea
                       name="description"
                       value={formData.description}
@@ -815,7 +1098,7 @@ const AdminDashboard = () => {
                     />
                   </div>
                   <div>
-                    <label style={labelStyle}>Eligibility</label>
+                    <label style={labelStyle}>Eligibility{(formData.category === 'upcoming-job' || formData.category === 'scholarship' || formData.category === 'admission') ? ' *' : ''}</label>
                     <textarea
                       name="eligibility"
                       value={formData.eligibility}
@@ -1023,123 +1306,270 @@ const AdminDashboard = () => {
       )}
 
       {/* Jobs Table */}
-      <div className="card card-rich" style={{ marginTop: '2rem' }}>
-        <h2 style={{
-          fontSize: '1.5rem',
-          fontWeight: '600',
-          marginBottom: '1.5rem',
-          color: isDarkTheme ? '#fff' : '#111827'
+      <div style={{
+        background: isDarkTheme 
+          ? 'rgba(30, 41, 59, 0.8)' 
+          : '#ffffff',
+        borderRadius: '20px',
+        padding: '2rem',
+        boxShadow: isDarkTheme 
+          ? '0 20px 60px rgba(0, 0, 0, 0.4)' 
+          : '0 20px 60px rgba(0, 0, 0, 0.1)',
+        border: isDarkTheme 
+          ? '1px solid rgba(148, 163, 184, 0.2)' 
+          : '1px solid rgba(0, 0, 0, 0.1)',
+        backdropFilter: 'blur(20px)'
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: '2rem',
+          paddingBottom: '1rem',
+          borderBottom: isDarkTheme 
+            ? '1px solid rgba(148, 163, 184, 0.2)' 
+            : '1px solid rgba(0, 0, 0, 0.1)'
         }}>
-          {activeFilter === 'all' ? 'All Jobs' : 
-           activeFilter === 'upcoming-job' ? 'Upcoming Jobs' :
-           activeFilter === 'result' ? 'Results' : 
-           activeFilter === 'admit-card' ? 'Admit Cards' :
-           activeFilter === 'scholarship' ? 'Scholarships' :
-           activeFilter === 'admission' ? 'Admissions' : 'Jobs'} ({filteredJobs.length})
-        </h2>
+          <h2 style={{
+            fontSize: '1.75rem',
+            fontWeight: '700',
+            color: isDarkTheme ? '#f1f5f9' : '#1e293b',
+            margin: 0
+          }}>
+            {activeFilter === 'all' ? 'All Jobs' : 
+             activeFilter === 'upcoming-job' ? 'Upcoming Jobs' :
+             activeFilter === 'result' ? 'Results' : 
+             activeFilter === 'admit-card' ? 'Admit Cards' :
+             activeFilter === 'scholarship' ? 'Scholarships' :
+             activeFilter === 'admission' ? 'Admissions' : 'Jobs'}
+          </h2>
+          <div style={{
+            color: isDarkTheme ? '#f1f5f9' : '#1e293b',
+            fontSize: '1.1rem',
+            fontWeight: '600'
+          }}>
+            {filteredJobs.length}
+          </div>
+        </div>
 
         {(filteredJobs || []).length === 0 ? (
           <div style={{
             textAlign: 'center',
-            padding: '3rem',
-            color: isDarkTheme ? '#9ca3af' : '#374151'
+            padding: '4rem 2rem',
+            color: isDarkTheme ? '#94a3b8' : '#64748b'
           }}>
-            <p>No jobs found. Create your first job!</p>
+            <div style={{
+              fontSize: '4rem',
+              marginBottom: '1rem',
+              opacity: 0.5
+            }}>📋</div>
+            <h3 style={{
+              fontSize: '1.5rem',
+              fontWeight: '600',
+              marginBottom: '0.5rem',
+              color: isDarkTheme ? '#f1f5f9' : '#1e293b'
+            }}>No jobs found</h3>
+            <p style={{
+              fontSize: '1.1rem',
+              opacity: 0.8
+            }}>Create your first job to get started!</p>
           </div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{
               width: '100%',
-              borderCollapse: 'collapse',
-              color: isDarkTheme ? '#e2e8f0' : '#111827'
+              borderCollapse: 'separate',
+              borderSpacing: '0 8px',
+              color: isDarkTheme ? '#f1f5f9' : '#1e293b'
             }}>
               <thead>
-                <tr style={{ borderBottom: isDarkTheme ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid #e5e7eb' }}>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Title</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Organization</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Category</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Last Date</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Posts</th>
-                  <th style={{ padding: '12px', textAlign: 'center', fontWeight: '600', color: isDarkTheme ? '#9ca3af' : '#374151', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.08em' }}>Actions</th>
+                <tr>
+                  <th style={{ 
+                    padding: '1rem 1.5rem', 
+                    textAlign: 'left', 
+                    fontWeight: '600', 
+                    color: isDarkTheme ? '#94a3b8' : '#64748b', 
+                    textTransform: 'uppercase', 
+                    fontSize: '0.8rem', 
+                    letterSpacing: '0.1em',
+                    background: isDarkTheme 
+                      ? 'rgba(15, 23, 42, 0.5)' 
+                      : 'rgba(248, 250, 252, 0.8)',
+                    borderRadius: '12px 0 0 12px'
+                  }}>Title & Organization</th>
+                  <th style={{ 
+                    padding: '1rem 1.5rem', 
+                    textAlign: 'left', 
+                    fontWeight: '600', 
+                    color: isDarkTheme ? '#94a3b8' : '#64748b', 
+                    textTransform: 'uppercase', 
+                    fontSize: '0.8rem', 
+                    letterSpacing: '0.1em',
+                    background: isDarkTheme 
+                      ? 'rgba(15, 23, 42, 0.5)' 
+                      : 'rgba(248, 250, 252, 0.8)'
+                  }}>Category</th>
+                  <th style={{ 
+                    padding: '1rem 1.5rem', 
+                    textAlign: 'left', 
+                    fontWeight: '600', 
+                    color: isDarkTheme ? '#94a3b8' : '#64748b', 
+                    textTransform: 'uppercase', 
+                    fontSize: '0.8rem', 
+                    letterSpacing: '0.1em',
+                    background: isDarkTheme 
+                      ? 'rgba(15, 23, 42, 0.5)' 
+                      : 'rgba(248, 250, 252, 0.8)'
+                  }}>Last Date</th>
+                  <th style={{ 
+                    padding: '1rem 1.5rem', 
+                    textAlign: 'left', 
+                    fontWeight: '600', 
+                    color: isDarkTheme ? '#94a3b8' : '#64748b', 
+                    textTransform: 'uppercase', 
+                    fontSize: '0.8rem', 
+                    letterSpacing: '0.1em',
+                    background: isDarkTheme 
+                      ? 'rgba(15, 23, 42, 0.5)' 
+                      : 'rgba(248, 250, 252, 0.8)'
+                  }}>Posts</th>
+                  <th style={{ 
+                    padding: '1rem 1.5rem', 
+                    textAlign: 'center', 
+                    fontWeight: '600', 
+                    color: isDarkTheme ? '#94a3b8' : '#64748b', 
+                    textTransform: 'uppercase', 
+                    fontSize: '0.8rem', 
+                    letterSpacing: '0.1em',
+                    background: isDarkTheme 
+                      ? 'rgba(15, 23, 42, 0.5)' 
+                      : 'rgba(248, 250, 252, 0.8)',
+                    borderRadius: '0 12px 12px 0'
+                  }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {(filteredJobs || []).map(job => (
-                  <tr key={job._id} style={{ borderBottom: isDarkTheme ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid #f3f4f6' }}>
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ fontWeight: '600', marginBottom: '2px', color: isDarkTheme ? '#fff' : '#111827' }}>
+                  <tr key={job._id} style={{ 
+                    background: isDarkTheme 
+                      ? 'rgba(30, 41, 59, 0.6)' 
+                      : '#ffffff',
+                    borderRadius: '12px',
+                    boxShadow: isDarkTheme 
+                      ? '0 4px 20px rgba(0, 0, 0, 0.3)' 
+                      : '0 4px 20px rgba(0, 0, 0, 0.08)',
+                    border: isDarkTheme 
+                      ? '1px solid rgba(148, 163, 184, 0.1)' 
+                      : '1px solid rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <td style={{ 
+                      padding: '1.5rem',
+                      borderRadius: '12px 0 0 12px'
+                    }}>
+                      <div style={{ fontWeight: '600', marginBottom: '4px', color: isDarkTheme ? '#f1f5f9' : '#1e293b', fontSize: '1.1rem' }}>
                         {job.title}
                       </div>
-                      <div style={{ fontSize: '0.875rem', color: isDarkTheme ? '#9ca3af' : '#374151' }}>
+                      <div style={{ fontSize: '0.9rem', color: isDarkTheme ? '#94a3b8' : '#64748b', fontWeight: '500' }}>
+                        {job.organization}
+                      </div>
+                      <div style={{ fontSize: '0.8rem', color: isDarkTheme ? '#64748b' : '#9ca3af', marginTop: '4px' }}>
                         Created: {formatDate(job.createdAt)}
                       </div>
                     </td>
-                    <td style={{ padding: '12px', color: isDarkTheme ? '#e2e8f0' : '#111827' }}>{job.organization}</td>
-                    <td style={{ padding: '12px', minWidth: '120px' }}>
+                    <td style={{ padding: '1.5rem' }}>
                       <span style={{
-                        padding: '4px 8px',
-                        borderRadius: '12px',
-                        fontSize: '0.75rem',
-                        fontWeight: '500',
+                        padding: '8px 16px',
+                        borderRadius: '20px',
+                        fontSize: '0.85rem',
+                        fontWeight: '600',
                         whiteSpace: 'nowrap',
                         display: 'inline-block',
-                        background: job.category === 'result' ? 'rgba(16, 185, 129, 0.2)' : 
-                                   job.category === 'admit-card' ? 'rgba(59, 130, 246, 0.2)' : 
-                                   job.category === 'scholarship' ? 'rgba(139, 92, 246, 0.2)' :
-                                   job.category === 'admission' ? 'rgba(6, 182, 212, 0.2)' : 'rgba(248, 113, 113, 0.2)',
-                        color: job.category === 'result' ? '#86efac' : 
-                               job.category === 'admit-card' ? '#93c5fd' : 
-                               job.category === 'scholarship' ? '#c4b5fd' :
-                               job.category === 'admission' ? '#67e8f9' : '#fecaca'
+                        background: job.category === 'result' ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 
+                                   job.category === 'admit-card' ? 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' : 
+                                   job.category === 'scholarship' ? 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)' :
+                                   job.category === 'admission' ? 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                        color: '#ffffff',
+                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
                       }}>
                         {getCategoryLabel(job.category)}
                       </span>
                     </td>
-                    <td style={{ padding: '12px', color: isDarkTheme ? '#e2e8f0' : '#111827' }}>{formatDate(job.lastDate)}</td>
-                    <td style={{ padding: '12px', color: isDarkTheme ? '#e2e8f0' : '#111827' }}>{job.posts}</td>
-                    <td style={{ padding: '12px', textAlign: 'center' }}>
-                      <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+                    <td style={{ padding: '1.5rem', color: isDarkTheme ? '#f1f5f9' : '#1e293b', fontWeight: '500' }}>{formatDate(job.lastDate)}</td>
+                    <td style={{ padding: '1.5rem', color: isDarkTheme ? '#f1f5f9' : '#1e293b', fontWeight: '500' }}>{job.posts || '-'}</td>
+                    <td style={{ padding: '1.5rem', textAlign: 'center', borderRadius: '0 12px 12px 0' }}>
+                      <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
                         <button
                           onClick={() => window.open(`/job/${job._id}`, '_blank')}
                           style={{
-                            background: 'rgba(148, 163, 184, 0.15)',
-                            border: '1px solid rgba(255, 255, 255, 0.08)',
-                            borderRadius: '6px',
-                            padding: '6px',
+                            background: 'linear-gradient(135deg, #64748b 0%, #475569 100%)',
+                            border: 'none',
+                            borderRadius: '10px',
+                            padding: '10px',
                             cursor: 'pointer',
-                            color: isDarkTheme ? '#9ca3af' : '#374151'
+                            color: '#ffffff',
+                            boxShadow: '0 4px 15px rgba(100, 116, 139, 0.3)',
+                            transition: 'all 0.3s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 8px 25px rgba(100, 116, 139, 0.4)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 15px rgba(100, 116, 139, 0.3)';
                           }}
                           title="View"
                         >
-                          <FaEye />
+                          <FaEye size={16} />
                         </button>
                         <button
                           onClick={() => handleEdit(job)}
                           style={{
-                            background: 'rgba(251, 191, 36, 0.15)',
-                            border: '1px solid rgba(251, 191, 36, 0.3)',
-                            borderRadius: '6px',
-                            padding: '6px',
+                            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                            border: 'none',
+                            borderRadius: '10px',
+                            padding: '10px',
                             cursor: 'pointer',
-                            color: '#fcd34d'
+                            color: '#ffffff',
+                            boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)',
+                            transition: 'all 0.3s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 8px 25px rgba(245, 158, 11, 0.4)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 15px rgba(245, 158, 11, 0.3)';
                           }}
                           title="Edit"
                         >
-                          <FaEdit />
+                          <FaEdit size={16} />
                         </button>
                         <button
                           onClick={() => handleDelete(job._id)}
                           style={{
-                            background: 'rgba(248, 113, 113, 0.15)',
-                            border: '1px solid rgba(248, 113, 113, 0.3)',
-                            borderRadius: '6px',
-                            padding: '6px',
+                            background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                            border: 'none',
+                            borderRadius: '10px',
+                            padding: '10px',
                             cursor: 'pointer',
-                            color: '#fca5a5'
+                            color: '#ffffff',
+                            boxShadow: '0 4px 15px rgba(239, 68, 68, 0.3)',
+                            transition: 'all 0.3s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.transform = 'translateY(-2px)';
+                            e.target.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.4)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.transform = 'translateY(0)';
+                            e.target.style.boxShadow = '0 4px 15px rgba(239, 68, 68, 0.3)';
                           }}
                           title="Delete"
                         >
-                          <FaTrash />
+                          <FaTrash size={16} />
                         </button>
                       </div>
                     </td>
@@ -1150,6 +1580,7 @@ const AdminDashboard = () => {
           </div>
         )}
       </div>
+    </div>
 
       {/* YouTube Update Form Modal */}
       {showYouTubeForm && (

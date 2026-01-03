@@ -141,7 +141,7 @@ const CategoryPage = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
-            color: themeColors.text,
+            color: '#000000',
             textDecoration: 'none',
             marginBottom: '2rem',
             fontWeight: '600',

@@ -1031,7 +1031,7 @@ const Home = () => {
                 top: '100%',
                 left: 0,
                 right: 0,
-                background: 'rgba(255, 255, 255, 0.98)',
+                background: '#000000',
                 borderRadius: '0 0 20px 20px',
                 boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
                 backdropFilter: 'blur(30px)',
@@ -1041,7 +1041,7 @@ const Home = () => {
                 maxHeight: '400px',
                 overflowY: 'auto'
               }}>
-                <div style={{ padding: '16px 20px 8px', fontSize: '0.9rem', color: '#64748b', fontWeight: '600' }}>
+                <div style={{ padding: '16px 20px 8px', fontSize: '0.9rem', color: '#ffffff', fontWeight: '600' }}>
                   Quick Results ({searchResults.length})
                 </div>
                 {searchResults.map((result, index) => {
@@ -1070,7 +1070,7 @@ const Home = () => {
                         borderBottom: index < searchResults.length - 1 ? '1px solid rgba(226, 232, 240, 0.5)' : 'none',
                         transition: 'background-color 0.2s ease'
                       }}
-                      onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(59, 130, 246, 0.05)'}
+                      onMouseEnter={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
                       onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
                     >
                       <div style={{
@@ -1080,10 +1080,10 @@ const Home = () => {
                         gap: '12px'
                       }}>
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontWeight: '600', fontSize: '0.95rem', marginBottom: '4px', color: '#1e293b' }}>
+                          <div style={{ fontWeight: '600', fontSize: '0.95rem', marginBottom: '4px', color: '#ffffff' }}>
                             {truncateText(result.title, 70)}
                           </div>
-                          <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                          <div style={{ fontSize: '0.85rem', color: '#cccccc' }}>
                             {result.organization}
                             {result.posts && ` • ${result.posts} Posts`}
                           </div>
@@ -1101,7 +1101,7 @@ const Home = () => {
                             {categoryInfo.label}
                           </span>
                           {result.url && (
-                            <FaExternalLinkAlt size={12} style={{ color: '#64748b' }} />
+                            <FaExternalLinkAlt size={12} style={{ color: '#cccccc' }} />
                           )}
                         </div>
                       </div>
@@ -1118,7 +1118,7 @@ const Home = () => {
                 top: '100%',
                 left: 0,
                 right: 0,
-                background: 'rgba(255, 255, 255, 0.98)',
+                background: '#000000',
                 borderRadius: '0 0 20px 20px',
                 boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
                 backdropFilter: 'blur(30px)',

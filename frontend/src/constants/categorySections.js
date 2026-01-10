@@ -216,6 +216,65 @@ export const CATEGORY_SECTION_CONFIG = {
       helper: 'Step-by-step guidance for result download.'
     }
   ],
+  'sarkari-yojana': [
+    ...baseBannerFields,
+    {
+      key: 'importantDates',
+      label: 'Important Dates',
+      type: 'textarea',
+      placeholder: 'Scheme Launch: 01 January 2025\nApplication Start: 15 January 2025\nLast Date: 31 March 2025',
+      helper: `${listStyleHelper} Example: "Application Start: 15 January 2025".`
+    },
+    {
+      key: 'applicationFee',
+      label: 'Application Fee Details',
+      type: 'textarea',
+      placeholder: 'Application Fee: Free\nNo charges for application\nOnline application only',
+      helper: listStyleHelper
+    },
+    {
+      key: 'ageLimit',
+      label: 'Age Limit / Eligibility Age',
+      type: 'textarea',
+      placeholder: 'Minimum Age: 18 Years\nMaximum Age: 60 Years\nAs per scheme guidelines',
+      helper: listStyleHelper
+    },
+    {
+      key: 'totalPosts',
+      label: 'Scheme Coverage / Beneficiaries',
+      type: 'textarea',
+      placeholder: 'Target Beneficiaries: 10,00,000\nCoverage: Pan India\nRefer to guidelines for state-wise allocation.',
+      helper: 'Mention target beneficiaries and coverage area.'
+    },
+    {
+      key: 'eligibilityDetails',
+      label: 'Eligibility Criteria',
+      type: 'textarea',
+      placeholder: 'PM Kisan Yojana 2025 - For farmers with landholding up to 2 hectares.',
+      helper: 'Detailed eligibility requirements for the scheme.'
+    },
+    {
+      key: 'salaryPerks',
+      label: 'Scheme Benefits / Amount',
+      type: 'textarea',
+      placeholder: 'Financial Assistance: ₹6,000/- per year\nPayment Mode: Direct Bank Transfer\nInstallments: 3 equal installments of ₹2,000 each',
+      helper: listStyleHelper
+    },
+    {
+      key: 'selectionProcess',
+      label: 'Application Process',
+      type: 'textarea',
+      placeholder: 'Online Application\nDocument Verification\nBank Account Verification\nApproval Process',
+      helper: 'One step per line for application process.'
+    },
+    {
+      key: 'howTo',
+      label: 'How to Apply / Required Documents',
+      type: 'textarea',
+      placeholder: 'Visit pmkisan.gov.in\nClick on New Farmer Registration\nEnter Aadhaar Number\nFill required details\nUpload documents: Aadhaar, Bank Passbook, Land Records\nSubmit application.',
+      helper: 'Step-by-step application process and required documents.'
+    }
+  ],
   scholarship: [
     ...baseBannerFields,
     {

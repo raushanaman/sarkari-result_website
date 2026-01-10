@@ -11,7 +11,7 @@ const JobSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['result', 'admit-card', 'upcoming-job', 'scholarship', 'admission'],
+    enum: ['result', 'admit-card', 'upcoming-job', 'sarkari-yojana', 'scholarship', 'admission'],
     required: true
   },
   description: {
@@ -59,7 +59,7 @@ const JobSchema = new mongoose.Schema({
     required: false
   },
   posts: {
-    type: Number,
+    type: String,
     required: false
   },
   youtubeLink: {

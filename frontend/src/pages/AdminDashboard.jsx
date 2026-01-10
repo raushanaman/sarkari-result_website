@@ -317,6 +317,8 @@ const AdminDashboard = () => {
         return 'Admit Card';
       case 'upcoming-job':
         return 'Job Opening';
+      case 'sarkari-yojana':
+        return 'Sarkari Yojana';
       case 'scholarship':
         return 'Scholarship';
       case 'admission':
@@ -709,6 +711,62 @@ const AdminDashboard = () => {
           </button>
           
           <button
+            onClick={() => handleFilterChange('sarkari-yojana')}
+            style={{
+              background: isDarkTheme 
+                ? (activeFilter === 'sarkari-yojana' 
+                  ? 'linear-gradient(135deg, #ea580c 0%, #dc2626 100%)' 
+                  : 'rgba(30, 41, 59, 0.8)')
+                : (activeFilter === 'sarkari-yojana' 
+                  ? 'linear-gradient(135deg, #ea580c 0%, #dc2626 100%)' 
+                  : '#ffffff'),
+              border: isDarkTheme 
+                ? '1px solid rgba(148, 163, 184, 0.2)' 
+                : '1px solid rgba(0, 0, 0, 0.1)',
+              borderRadius: '16px',
+              padding: '2rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: isDarkTheme 
+                ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                : '0 8px 32px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
+              color: activeFilter === 'sarkari-yojana' ? '#ffffff' : (isDarkTheme ? '#f1f5f9' : '#1e293b')
+            }}
+            onMouseEnter={(e) => {
+              if (activeFilter !== 'sarkari-yojana') {
+                e.target.style.transform = 'translateY(-4px)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 12px 40px rgba(0, 0, 0, 0.4)' 
+                  : '0 12px 40px rgba(0, 0, 0, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeFilter !== 'sarkari-yojana') {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = isDarkTheme 
+                  ? '0 8px 32px rgba(0, 0, 0, 0.3)' 
+                  : '0 8px 32px rgba(0, 0, 0, 0.1)';
+              }
+            }}
+          >
+            <h3 style={{ 
+              fontSize: '3rem', 
+              fontWeight: '700', 
+              marginBottom: '0.5rem',
+              color: activeFilter === 'sarkari-yojana' ? '#ffffff' : '#ea580c'
+            }}>
+              {(jobs || []).filter(job => job.category === 'sarkari-yojana').length}
+            </h3>
+            <p style={{ 
+              margin: 0, 
+              fontSize: '1.1rem', 
+              fontWeight: '500',
+              color: activeFilter === 'sarkari-yojana' ? 'rgba(255, 255, 255, 0.9)' : (isDarkTheme ? '#94a3b8' : '#64748b')
+            }}>Sarkari Yojana</p>
+          </button>
+          
+          <button
             onClick={() => handleFilterChange('scholarship')}
             style={{
               background: isDarkTheme 
@@ -1023,6 +1081,7 @@ const AdminDashboard = () => {
                       <option value="upcoming-job">Upcoming Job</option>
                       <option value="result">Result</option>
                       <option value="admit-card">Admit Card</option>
+                      <option value="sarkari-yojana">Sarkari Yojana</option>
                       <option value="scholarship">Scholarship</option>
                       <option value="admission">Admission</option>
                     </select>
@@ -1340,6 +1399,7 @@ const AdminDashboard = () => {
              activeFilter === 'upcoming-job' ? 'Upcoming Jobs' :
              activeFilter === 'result' ? 'Results' : 
              activeFilter === 'admit-card' ? 'Admit Cards' :
+             activeFilter === 'sarkari-yojana' ? 'Sarkari Yojana' :
              activeFilter === 'scholarship' ? 'Scholarships' :
              activeFilter === 'admission' ? 'Admissions' : 'Jobs'}
           </h2>
@@ -1487,6 +1547,7 @@ const AdminDashboard = () => {
                         display: 'inline-block',
                         background: job.category === 'result' ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 
                                    job.category === 'admit-card' ? 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' : 
+                                   job.category === 'sarkari-yojana' ? 'linear-gradient(135deg, #ea580c 0%, #dc2626 100%)' :
                                    job.category === 'scholarship' ? 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)' :
                                    job.category === 'admission' ? 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
                         color: '#ffffff',

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FaHome, FaBriefcase, FaFileAlt, FaGraduationCap, FaMoon, FaSun } from 'react-icons/fa';
+import { FaHome, FaBriefcase, FaFileAlt, FaGraduationCap, FaMoon, FaSun, FaHandHoldingHeart } from 'react-icons/fa';
 import logo from '../Images/Logo.jpeg';
 import { useState, useEffect } from 'react';
 
@@ -257,6 +257,19 @@ const Header = () => {
               >
                 <FaGraduationCap size={16} />
                 Result
+              </Link>
+              
+              <Link
+                to="/category/sarkari-yojana"
+                className="nav-item"
+                target={isAdminPage ? "_blank" : "_self"}
+                rel={isAdminPage ? "noopener noreferrer" : undefined}
+                style={navLinkStyle}
+                onMouseEnter={(event) => handleHover(event, true)}
+                onMouseLeave={(event) => handleHover(event, false)}
+              >
+                <FaHandHoldingHeart size={16} />
+                Sarkari Yojana
               </Link>
               
               <Link

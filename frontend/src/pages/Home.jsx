@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { jobsAPI } from '../services/api';
 import JobCard from '../components/JobCard';
 import YouTubeSection from '../components/YouTubeSection';
-import { FaGraduationCap, FaFileAlt, FaBriefcase, FaArrowRight, FaWhatsapp, FaSearch, FaTimes, FaSpinner, FaExternalLinkAlt, FaEye, FaMicrophone, FaMicrophoneSlash, FaTelegram, FaCircle, FaFacebook, FaInstagram } from 'react-icons/fa';
+import { FaGraduationCap, FaFileAlt, FaBriefcase, FaArrowRight, FaWhatsapp, FaSearch, FaTimes, FaSpinner, FaExternalLinkAlt, FaEye, FaMicrophone, FaMicrophoneSlash, FaTelegram, FaCircle, FaFacebook, FaInstagram, FaHandHoldingHeart } from 'react-icons/fa';
 
 const tilePalette = [
   'linear-gradient(135deg, #1f2937 0%, #374151 100%)',
@@ -56,6 +56,18 @@ const highlightColumnsConfig = [
     ctaColor: '#047857'
   },
   {
+    id: 'sarkariYojana',
+    title: 'Sarkari Yojana',
+    subtitle: 'Government schemes & benefits',
+    headerGradient: 'linear-gradient(120deg, #f97316 0%, #ea580c 55%, #dc2626 100%)',
+    empty: 'No schemes available',
+    icon: <FaHandHoldingHeart size={22} />,
+    viewAllLabel: 'View All Schemes',
+    viewAllLink: '/category/sarkari-yojana',
+    ctaTint: '#fff7ed',
+    ctaColor: '#c2410c'
+  },
+  {
     id: 'scholarships',
     title: 'Scholarships',
     subtitle: 'Education funding opportunities',
@@ -88,6 +100,7 @@ const Home = () => {
     results: [],
     admitCards: [],
     upcomingJobs: [],
+    sarkariYojana: [],
     scholarships: [],
     admissions: [],
     latest: []
@@ -217,7 +230,7 @@ const Home = () => {
     }
     
     // Search in all jobs data
-    const allJobs = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.scholarships, ...jobs.admissions, ...jobs.latest];
+    const allJobs = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.sarkariYojana, ...jobs.scholarships, ...jobs.admissions, ...jobs.latest];
     
     // Clean and normalize search query
     const cleanQuery = query.toLowerCase().trim();
@@ -306,7 +319,7 @@ const Home = () => {
       }
       
       // Enhanced search in all data with better matching
-      const allJobs = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.scholarships, ...jobs.admissions, ...jobs.latest];
+      const allJobs = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.sarkariYojana, ...jobs.scholarships, ...jobs.admissions, ...jobs.latest];
       
       const cleanQuery = searchQuery.toLowerCase().trim();
       const queryWords = cleanQuery.split(/\s+/);
@@ -340,21 +353,23 @@ const Home = () => {
 
   const fetchJobs = async () => {
     try {
-      const [resultsRes, admitCardsRes, upcomingJobsRes, scholarshipsRes, admissionsRes, latestRes] = await Promise.all([
+      const [resultsRes, admitCardsRes, upcomingJobsRes, sarkariYojanaRes, scholarshipsRes, admissionsRes, latestRes] = await Promise.all([
         jobsAPI.getAllJobs('result'),
         jobsAPI.getAllJobs('admit-card'),
         jobsAPI.getAllJobs('upcoming-job'),
+        jobsAPI.getAllJobs('sarkari-yojana'),
         jobsAPI.getAllJobs('scholarship'),
         jobsAPI.getAllJobs('admission'),
         jobsAPI.getAllJobs()
       ]);
 
-      console.log('API Response:', { resultsRes, admitCardsRes, upcomingJobsRes, scholarshipsRes, admissionsRes, latestRes });
+      console.log('API Response:', { resultsRes, admitCardsRes, upcomingJobsRes, sarkariYojanaRes, scholarshipsRes, admissionsRes, latestRes });
       
       // Handle both response.data and response.data.data formats
       const resultsData = resultsRes.data?.data || resultsRes.data || [];
       const admitCardsData = admitCardsRes.data?.data || admitCardsRes.data || [];
       const upcomingJobsData = upcomingJobsRes.data?.data || upcomingJobsRes.data || [];
+      const sarkariYojanaData = sarkariYojanaRes.data?.data || sarkariYojanaRes.data || [];
       const scholarshipsData = scholarshipsRes.data?.data || scholarshipsRes.data || [];
       const admissionsData = admissionsRes.data?.data || admissionsRes.data || [];
       const latestData = latestRes.data?.data || latestRes.data || [];
@@ -363,6 +378,7 @@ const Home = () => {
         results: resultsData.slice(0, 20),
         admitCards: admitCardsData.slice(0, 20),
         upcomingJobs: upcomingJobsData.slice(0, 20),
+        sarkariYojana: sarkariYojanaData.slice(0, 20),
         scholarships: scholarshipsData.slice(0, 20),
         admissions: admissionsData.slice(0, 20),
         latest: latestData.slice(0, 6)
@@ -373,6 +389,7 @@ const Home = () => {
         results: [],
         admitCards: [],
         upcomingJobs: [],
+        sarkariYojana: [],
         scholarships: [],
         admissions: [],
         latest: []
@@ -499,7 +516,7 @@ const Home = () => {
             {/* Content Display - 8 Updates in 2 Rows */}
             {(() => {
               // Get all jobs from last 30 days and remove duplicates
-              const allJobs = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.scholarships, ...jobs.admissions, ...jobs.latest];
+              const allJobs = [...jobs.results, ...jobs.admitCards, ...jobs.upcomingJobs, ...jobs.sarkariYojana, ...jobs.scholarships, ...jobs.admissions, ...jobs.latest];
               
               // Remove duplicates by ID
               const uniqueJobs = allJobs.filter((job, index, self) => 
@@ -1054,6 +1071,8 @@ const Home = () => {
                     categoryInfo = { label: 'Admit Card', color: '#10b981' };
                   } else if (jobs.upcomingJobs.includes(result)) {
                     categoryInfo = { label: 'Job', color: '#f97316' };
+                  } else if (jobs.sarkariYojana.includes(result)) {
+                    categoryInfo = { label: 'Sarkari Yojana', color: '#ea580c' };
                   } else if (jobs.scholarships.includes(result)) {
                     categoryInfo = { label: 'Scholarship', color: '#8b5cf6' };
                   } else if (jobs.admissions.includes(result)) {
